@@ -141,7 +141,6 @@ public class ItemStorage {
      */
     private static ArrayList<String> readLinesIntoList() {
         ArrayList<String> lines = new ArrayList<>();
-        System.out.println("File path should be: " + FileManager.ITEMS_FILE_PATH);
         try (BufferedReader reader = new BufferedReader(new FileReader(FileManager.ITEMS_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {

@@ -9,16 +9,18 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
 
+/**
+ * View handles displaying the CLI user interface
+ * <p>Methods:</p>
+ * <li>{@link #displayMainMenu()}</li>
+ * <li>{@link #handleMainMenuChoice()}</li>
+ */
 public class View {
 
     static String mediumLineBreak = "----------------------------------------------------------";
     static String longLineBreak =   "--------------------------------------------------------------------------";
     /**
      * Displays the main menu of the Inventory Management System in the console.
-     *
-     * <p>The main menu includes options for adding a new item, updating the quantity of an existing item,
-     * removing an item, viewing the daily transaction report, and exiting the system.
-     * After displaying the options, the method calls {@link #handleMainMenuChoice()} to process the user's input.</p>
      */
     public static void displayMainMenu() {
         System.out.println("\n I N V E N T O R Y    M A N A G E M E N T    S Y S T E M");
@@ -29,7 +31,6 @@ public class View {
         System.out.println("4. VIEW DAILY TRANSACTION REPORT");
         System.out.println(mediumLineBreak);
         System.out.println("5. Exit");
-
         handleMainMenuChoice();
     }
 
@@ -52,8 +53,8 @@ public class View {
     }
 
     /**
-     * Prompts user to confirm details of the new Item by displaying each property, could expand on this to allow the
-     * user to edit the item before confirming
+     * Prompts user to confirm details of the new Item by displaying each property.
+     * <p>Could expand on this to allow the user to edit the item before confirming</p>
      * @param item Instance of Item class
      * @return boolean (true = user confirmed item)
      */
@@ -78,37 +79,37 @@ public class View {
      */
     public static int displayItems(ArrayList<Item> items, String headerTitle) {
         // Define format strings with fixed widths ensuring the table is aligned.
-        String headerFormat = "%-8s %-15s %12s %10s %12s";
-        String itemFormat = "%-8d %-15s %12f %10f %12f";
+        String headerFormat = "%-10s %-15s %12s %10s %12s";
+        String itemFormat = "%-10d %-15s %12f %10f %12f";
 
-        // Print the header
-        System.out.println("\n------- " + headerTitle + " ------");
+        System.out.println("\n------- " + headerTitle + " ------"); // Print the header
         System.out.printf((headerFormat) + "%n", "ID", "Name", "Unit Price", "Quantity", "Total Price");
         System.out.println(longLineBreak);
 
-        // Print each item using the itemFormat
-        for (Item item : items) {
-            System.out.printf((itemFormat) + "%n",
+        for (Item item : items) { // this is a shorthand way of writing for (int i = 0; i < items.length; i++) {
+            System.out.printf((itemFormat) + "%n", // Print each item using the itemFormat
                     item.getId(),
                     item.getName(),
                     item.getUnitPrice(),
                     item.getQtyInStock(),
                     item.getTotalValue());
         }
-
         System.out.println(longLineBreak);
         System.out.println("0 : Exit and Return to main menu");
         System.out.print("\nTo select an item, type an ID and press ENTER: ");
-        Scanner itemScanner = new Scanner(System.in);
+
+        Scanner itemScanner = new Scanner(System.in); // Get user input
         int itemID = itemScanner.nextInt();
         if (itemID == 0) {
-            return -1;
+            return -1; // return -1 if user wishes to return to main menu
         } else {
-            return itemID;
+            return itemID; // return itemID otherwise.
         }
     }
 
-
+    /* This interface allows me to use it as an argument type for any function/method. This allows me to pass in a method
+    that should execute when a condition is met such as in tryInputAgain. Utilizing this allows me to re-use tryInputAgain
+    in many different scenarios and pass in the method I want to execute when the user confirms they do*/
     @FunctionalInterface
     public interface UserAction {
         void execute();
@@ -144,19 +145,17 @@ public class View {
      * If the input is invalid (i.e., the parser throws an exception), the method displays an error message and recursively
      * calls itself to prompt the user again. This process repeats until a valid input is provided.
      * <p>
-     *
      * @param <T>    the type of the input to be returned after parsing
      * @param prompt the message displayed to the user when requesting input
      * @param parser a function that converts a {@code String} input into the desired type {@code T}
      * @return the parsed value of type {@code T} entered by the user
      */
     public static <T> T getInput(String prompt, Function<String, T> parser) {
-        // TODO - Add an exit mechanism here
         try {
-            System.out.print("\n" + prompt);
+            System.out.print("\n" + prompt); // Print out a prompt on the next line.
             Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            // Parse the input into the required Type (double / int / String etc) and return it.
+            String input = scanner.nextLine(); // wait for user input (String)
+            // Parse the input into the required Type (double / int / String etc.) and return it.
             return parser.apply(input);
         } catch (Exception e) {
             System.out.println("Invalid input. Please try again.");
@@ -167,7 +166,6 @@ public class View {
 
     /**
      * Prompts the user to confirm the permanent deletion of an item from storage.
-     *
      * <p>The method displays a warning that the deletion cannot be reversed and asks for confirmation
      * from the user. If the user confirms by entering 'Y', the item is deleted from storage. If the user enters 'N',
      * they are returned to the main menu. If an invalid input is provided, the method recursively prompts the user again
@@ -179,11 +177,11 @@ public class View {
         System.out.println("THIS WILL DELETE THE ITEM PERMANENTLY AND CANNOT BE REVERSED");
         System.out.print("\n DO YOU WANT TO DELETE THIS ITEM? [Y/N]: ");
 
-        String input = scanner.nextLine().trim().toUpperCase();
+        char input = scanner.nextLine().trim().toUpperCase().charAt(0);
 
         switch (input) {
-            case "Y": return true; // No need for a 'break' as return automatically does this
-            case "N": return false;
+            case 'Y': return true; // No need for a 'break' as return automatically does this
+            case 'N': return false;
             default: {
                 System.out.println("Invalid input. Please enter 'Y' or 'N'");
                 confirmDeletion();

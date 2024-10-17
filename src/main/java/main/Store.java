@@ -8,11 +8,10 @@ import storage.FileManager;
  */
 public class Store {
     /**
-     * Main method
+     * Main method of the application where the program starts from.
      */
     public static void main(String[] args) {
-        // Initialize the storage files before starting the app.
-        FileManager.initializeStorage();
+        FileManager.initializeStorage(); // Initialize the storage files before starting the app.
         StoreController.start();
     }
 }
