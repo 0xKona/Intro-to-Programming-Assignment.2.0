@@ -14,6 +14,14 @@ import java.util.function.Function;
  * <p>Methods:</p>
  * <li>{@link #displayMainMenu()}</li>
  * <li>{@link #handleMainMenuChoice()}</li>
+ * <li>{@link #displayAddNewItemHeader()}</li>
+ * <li>{@link #promptNewItemConfirmation(Item)}</li>
+ * <li>{@link #displayItems(ArrayList, String)}</li>
+ * <li>{@link #tryInputAgain(String, UserAction)}</li>
+ * <li>{@link #getInput(String, Function)}</li>
+ * <li>{@link #confirmDeletion()}</li>
+ * <li>{@link #displayTransactions(ArrayList)}</li>
+ * <li>{@link #exitToMainMenu()}</li>
  */
 public class View {
 

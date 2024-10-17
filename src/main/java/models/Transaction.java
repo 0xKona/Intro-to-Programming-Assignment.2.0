@@ -6,12 +6,23 @@ import utils.TimestampGenerator;
 
 /**
  * Represents a transaction that records changes to the quantity and value of an item in stock.
- *
- * <p>The class stores essential information about the transaction, including the type of transaction
- * (e.g., sale or purchase), the change in quantity and value, the remaining quantity after the transaction,
- * and the timestamp indicating when the transaction occurred.</p>
- *
- * <p>This class provides getter and setter methods for each field, allowing for the transaction's details to be accessed and modified as needed.</p>
+ * <p>Uses getters and setters to alter fields</p>
+ * <p>Methods:</p>
+ * <li>{@link #getId()}</li>
+ * <li>{@link #setId(int)}</li>
+ * <li>{@link #getDescription()}</li>
+ * <li>{@link #setDescription(String)}</li>
+ * <li>{@link #getQuantityChange()}</li>
+ * <li>{@link #setQuantityChange(double)}</li>
+ * <li>{@link #getValueChange()}</li>
+ * <li>{@link #setValueChange(double)}</li>
+ * <li>{@link #getQuantityRemaining()}</li>
+ * <li>{@link #setQuantityRemaining(double)}</li>
+ * <li>{@link #getTransactionType()}</li>
+ * <li>{@link #setTransactionType(TransactionType)}</li>
+ * <li>{@link #getTimestamp()}</li>
+ * <li>{@link #setTimestamp(String)}</li>
+ * <li>{@link #generate(Item, TransactionType)}</li>
  */
 public class Transaction {
     private int id;
@@ -22,62 +33,124 @@ public class Transaction {
     private String transactionType;
     private String timestamp;
 
+    /**
+     * Gets the transaction objects ID and returns it.
+     * @return int;
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the Transactions ID, should only be used when reading data from storage and creating objects, Manually
+     * updating a TransactionID is NOT recommended.
+     * @param id int
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets the transaction objects description and returns it
+     * @return String
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets the Transactions description.
+     * @param description String
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets the transaction objects quantity change value and returns it
+     * @return double (can be plus or minus)
+     */
     public double getQuantityChange() {
         return quantityChange;
     }
 
+    /**
+     * Manually sets the transaction objects quantity change value
+     * @param quantityChange double (can be plus or minus)
+     */
     public void setQuantityChange(double quantityChange) {
         this.quantityChange = quantityChange;
     }
 
+    /**
+     * Gets the transaction objects value change value
+     * @return double (can be plus or minus)
+     */
     public double getValueChange() {
         return valueChange;
     }
 
+    /**
+     * Manually sets the value change value
+     * @param valueChange double
+     */
     public void setValueChange(double valueChange) {
         this.valueChange = valueChange;
     }
 
+    /**
+     * Gets the quantity remaining value from the transaction object
+     * @return double (plus or minus)
+     */
     public double getQuantityRemaining() {
         return quantityRemaining;
     }
 
+    /**
+     * Sets the quantity remaining value for the transaction object
+     * @param quantityRemaining double (plus or minus)
+     */
     public void setQuantityRemaining(double quantityRemaining) {
         this.quantityRemaining = quantityRemaining;
     }
 
+    /**
+     * Gets the transaction objects Transaction Type and returns is as a TransactionType enum
+     * @return {@link TransactionType}
+     */
     public TransactionType getTransactionType() {
         return TransactionType.valueOf(this.transactionType);
     }
 
+    /**
+     * Sets the transaction type for the transaction object.
+     * @param transactionType {@link TransactionType} enum
+     */
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType.toString();
     }
 
+    /**
+     * gets the transaction objects timestamp
+     * @return String
+     */
     public String getTimestamp() {
         return timestamp;
     }
 
+    /**
+     * Sets the transaction timestamp for the transaction object
+     * @param timestamp String
+     */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Generates the transaction object based on the provided Item object and TransactionType enum. 
+     * @param item {@link Item} object
+     * @param transactionType {@link TransactionType} object
+     */
     public void generate(Item item, TransactionType transactionType) {
         this.id = IDGenerator.generateNewID();
         this.description = String.format("%s has been %s", item.getName(), transactionType.toString());
