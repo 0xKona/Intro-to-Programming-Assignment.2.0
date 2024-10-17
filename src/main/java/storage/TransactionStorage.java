@@ -54,7 +54,7 @@ public class TransactionStorage {
                 return;
             } else {
                 String[] splitLine = currentLine.split(",");
-                Transaction transaction = new Transaction();
+                Transaction transaction = new Transaction(); // Initialize new transaction object.
                 transaction.setId(Integer.parseInt(splitLine[0]));
                 transaction.setDescription(splitLine[1]);
                 transaction.setQuantityChange(Double.parseDouble(splitLine[2]));
@@ -62,7 +62,7 @@ public class TransactionStorage {
                 transaction.setQuantityRemaining(Double.parseDouble(splitLine[4]));
                 transaction.setTransactionType(TransactionType.valueOf(splitLine[5]));
                 transaction.setTimestamp(splitLine[6]);
-                transactions.add(transaction);
+                transactions.add(transaction); // after setting elements, add object to ArrayList.
             }
         });
         return transactions;

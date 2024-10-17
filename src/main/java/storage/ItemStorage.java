@@ -1,12 +1,19 @@
 package storage;
 
-import controller.TransactionController;
 import models.Item;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/**
+ * Handles logic for reading and writing to the file storage.
+ * <p>Methods:</p>
+ * <li>{@link #writeNewItemToStorage(Item)}</li>
+ * <li>{@link #readItems()}</li>
+ * <li>{@link #updateItem(Item)}</li>
+ * <li>{@link #deleteItem(Item)}</li>
+ */
 public class ItemStorage {
 
     /**

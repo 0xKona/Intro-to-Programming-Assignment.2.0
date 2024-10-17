@@ -5,7 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Handles initializing the storage files and checking if they exist
+ * Handles initializing the storage files and checking if they exist.
+ * <p>Methods:</p>
  * <li>{@link #ITEMS_FILE_PATH}</li>
  * <li>{@link #TRANSACTIONS_FILE_PATH}</li>
  * <li>{@link #initializeStorage()}</li>
@@ -15,18 +16,20 @@ public class FileManager {
     /* ***IMPORTANT NOTE***
         Reasoning for root file path when generating files:
 
-        Originally I kept the text files in a package called files with the following path:
+        Originally I kept the text files in a package called 'files' with the following path:
             "src/files/items.txt"
 
         This however caused Issues when building to a JAR file as the program could not modify the text files inside itself,
         the solution being to generate them in the same path as the JAR file if they don't exist, hence the creation of
         the FileManager class.
 
-        Having the paths defined in  single location and used elsewhere allows me to change it easily in the future if
-        needed.
+        Having the paths defined in  single location and using the variables elsewhere allows me to change it easily in
+        the future if needed.
     */
-    public static String ITEMS_FILE_PATH = "items.txt";
-    public static String TRANSACTIONS_FILE_PATH = "transactions.txt";
+
+    // These two variables are in uppercase as they will not be changed and are constants
+    public static final String ITEMS_FILE_PATH = "items.txt";
+    public static final String TRANSACTIONS_FILE_PATH = "transactions.txt";
 
     // Checks if the items file exists, if not it tries to create the file with the headers
     private static void checkItemsFile() {
