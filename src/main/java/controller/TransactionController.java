@@ -9,21 +9,19 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
- * Transaction controller handles the logic for creating new transactions and fetching the list of transactions from
- * storage.
- *
- * <p>Public Methods:</p>
+ * Transaction controller handles the logic fetching the list of transactions from storage and displaying it to the user.
+ * <p>Methods:</p>
+ * <li>{@link #generateDailyTransactionReport()}</li>
  */
 public class TransactionController {
 
+    /* initializeTransactionList reads the transactions from the file storage and stores then in an ArrayList for usage
+    by the other methods in the class */
     private static ArrayList<Transaction> transactions;
-    /**
-     * Initialize the transactions ArrayList
-     */
     private static void initializeTransactionList() {
         try {
             transactions = TransactionStorage.readTransactions();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { // Handle error reading file.
             System.out.println("File not found when reading transactions: " + e.getMessage());
             System.exit(1);
         }
@@ -34,7 +32,7 @@ public class TransactionController {
      * date, it then calls the displayTransactions method of ConsoleView, passing in the filteredList, to display it to
      * the User.
      * <p>
-     * This could be expanded upon by allowing the user to go backwards day by day to view previous days transactions.
+     * This could be expanded upon by allowing the user to select a date range and displaying transactions in that range.
      * </p>
      */
     public static void generateDailyTransactionReport() {
@@ -51,7 +49,7 @@ public class TransactionController {
      * date and return items for that date, allowing the user to input a date and show transactions for any date in the past.
      */
     private static ArrayList<Transaction> filterTransactionsByDate(ArrayList<Transaction> transactions) {
-        ArrayList<Transaction> filteredTransactions = new ArrayList<>();
+        ArrayList<Transaction> filteredTransactions = new ArrayList<>(); // initialize new array list
         String todaysDateString = TimestampGenerator.getCurrentTime().split(" ")[0]; // GET DATE PART "YYYY-MM-DD"
 
         for (Transaction transaction : transactions) { // Loop through transactions

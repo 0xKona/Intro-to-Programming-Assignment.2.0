@@ -172,10 +172,8 @@ public class View {
      * from the user. If the user confirms by entering 'Y', the item is deleted from storage. If the user enters 'N',
      * they are returned to the main menu. If an invalid input is provided, the method recursively prompts the user again
      * until a valid input is entered.</p>
-     *
-     * @param itemToDelete The {@link Item} to be deleted from storage.
      */
-    public static void confirmDeletion(Item itemToDelete) {
+    public static boolean confirmDeletion() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("----    ****IMPORTANT****    ----");
         System.out.println("THIS WILL DELETE THE ITEM PERMANENTLY AND CANNOT BE REVERSED");
@@ -183,14 +181,17 @@ public class View {
 
         String input = scanner.nextLine().trim().toUpperCase();
 
-        if (input.equals("Y")) {
-            itemToDelete.submitDeleteItem();
-        } else if (input.equals("N")) {
-            displayMainMenu();
-        } else {
-            System.out.println("Invalid input. Please enter 'Y' or 'N'");
-            confirmDeletion(itemToDelete);
+        switch (input) {
+            case "Y": return true; // No need for a 'break' as return automatically does this
+            case "N": return false;
+            default: {
+                System.out.println("Invalid input. Please enter 'Y' or 'N'");
+                confirmDeletion();
+            }
         }
+        /* Should never get to this point, however java requires a final boolean return as the default in
+        the switch calls itself again */
+        return false;
     }
 
     /**

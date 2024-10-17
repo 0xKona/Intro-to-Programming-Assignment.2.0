@@ -2,9 +2,21 @@ package controller;
 
 import main.View;
 
+/**
+ * Handles the main menu display and routing to the various programs.
+ * <p>Methods:</p>
+ * <li>{@link #start()}</li>
+ * <li>{@link #mainMenuRouting(int)}</li>
+ */
 public class StoreController {
 
+    /**
+     * Starts the application by displaying the main menu to the user.
+     */
     public static void start() {
+        /* View.displayMainMenu displays the user interface and then calls a handler function that captures the user
+        input which calls mainMenuRouting below, I have done it this way so that other programs can call the UI and the
+        Logic part separately when needed. */
         View.displayMainMenu();
     }
 
@@ -41,6 +53,8 @@ public class StoreController {
             default: {
                 // If capturedInput does not match any of the defined cases, input is invalid and user should try again.
                 System.out.println("This doesn't appear to be a valid option! Please try again...");
+                /* This is an example of why I seperated displaying the UI and handling the user input, here I can just
+                call the handler since the UI will already be on the screen. */
                 View.handleMainMenuChoice();
                 break;
             }

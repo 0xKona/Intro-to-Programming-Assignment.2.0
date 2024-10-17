@@ -8,13 +8,17 @@ import utils.IDGenerator;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Holds methods responsible for the logic of adding, updating and deleting items.
+ * <p>Methods:</p>
+ * <li>{@link #addNewItem()}</li>
+ * <li>{@link #editItemQuantity()}</li>
+ * <li>{@link #deleteItem()}</li>
+ */
 public class ItemController {
 
+    // Initialize reads items from storage and assigns them to the variable "Items" for usage by the various methods
     private static ArrayList<Item> items;
-
-    /**
-     * Reads items from storage and assigns them to a private variable 'items'
-     */
     private static void initializeItemList() {
         try {
             items = ItemStorage.readItems();
@@ -25,16 +29,14 @@ public class ItemController {
     }
 
     /**
-     * Displays CLI elements and performs logic for adding a new Item. Calling ConsoleView and ItemStorage.
+     * Displays CLI elements and performs logic for adding a new Item. Calling View.
      */
     public static void addNewItem() {
-        View.displayAddNewItemHeader();
+        View.displayAddNewItemHeader(); // Display user interface in CLI
+        Item newItem = new Item(); // Create a new object from the Item class
+        newItem.setId(IDGenerator.generateNewID()); // Set the ID.
 
-        // Create a new object from the Item class
-        Item newItem = new Item();
-        newItem.setId(IDGenerator.generateNewID());
-
-        /* For each value we call ConsoleView.getInput, passing in a prompt and a parse to ensure we get the correct
+        /* For each value call View.getInput, passing in a prompt and a parser to ensure we get the correct
            type back, the default is a String so in the Item Name one we simply pass a function that returns the input,
            however for the others I need to pass the parseDouble function that parses a String to a double.
          */
@@ -47,17 +49,72 @@ public class ItemController {
         double itemQty = View.getInput("Enter Items Quantity [Units]: ", Double::parseDouble);
         newItem.setQtyInStock(itemQty);
 
-        // Prompt user to confirm item
-        boolean userHasConfirmed = View.promptNewItemConfirmation(newItem);
+        boolean userHasConfirmed = View.promptNewItemConfirmation(newItem); // Prompt user to confirm item
 
-        if (userHasConfirmed) {
-            newItem.submitNewItem();
+        if (userHasConfirmed) { // Conditional logic depending on user confirmation.
+            newItem.submitNewItem(); // Add new item by using method in the Item class.
             System.out.println(newItem.getName() + " has been submitted.");
         } else {
             System.out.println(newItem.getName() + " has not been submitted.");
         }
-
         StoreController.start(); // Return the user back to the home screen.
+    }
+
+    /**
+     * Displays CLI elements and performs logic for editing the quantity of an Item.
+     */
+    public static void editItemQuantity() {
+        initializeItemList(); // initialize a list of existing items.
+        int selectedItem = View.displayItems(items, "SELECT ITEM TO UPDATE QUANTITY");
+        if (selectedItem == -1) { // return to main menu on rejection.
+            View.displayMainMenu();
+            return;
+        }
+        try {
+            Item itemToUpdate = findItemByID(items, selectedItem); // Get instance of Item class by the ID.
+            System.out.printf("\nEditing: %s [ID: %d]", itemToUpdate.getName(), itemToUpdate.getId());
+            System.out.println("\nCurrent quantity: " + itemToUpdate.getQtyInStock());
+
+            double newQuantity = View.getInput("Enter New Quantity: ", Double::parseDouble); // Get newQty
+            itemToUpdate.setQtyInStock(newQuantity); // set newQty to object
+            itemToUpdate.submitUpdatedItem(); // update item in storage using method in Item class.
+
+            StoreController.start(); // Fully Reset Application upon completion
+        } catch (IOException error) {
+            /* If findItemByID returns an error due to not being able to match an Item with the ID provided
+               we try again calling editItemQuantity with a Lambda function (Also known as an anonymous or unnamed function)
+               and passing in the items as an argument.
+             */
+            View.tryInputAgain("Item with that ID does not exist: ", ItemController::editItemQuantity);
+        }
+    }
+
+    /**
+     * Method responsible for the 'delete item' option in the main menu, handles allowing the user to delete an Item and
+     * displaying CLI elements for the user to interact with.
+     */
+    public static void deleteItem() {
+        initializeItemList(); // Initialize the ArrayList of Items.
+        /* ConsoleView.displayItems returns an item ID, if it returns -1, it means the user selected the option to return
+        to the main menu, therefore we will return back to the main menu with a conditional if statement,
+        if an actual ID is returned, the program will continue */
+        int selectedItem = View.displayItems(items, "SELECT ITEM TO DELETE"); // Prompt user to select an Item.
+        if (selectedItem == -1) {
+            View.displayMainMenu(); // Return to main menu on rejection
+            return;
+        }
+        /* Try to find the Item with the matching ID from the ArrayList of Items, if no Item is found, the User will be
+        prompted again to input a valid ID */
+        try {
+            Item foundItem = findItemByID(items, selectedItem); // Find item from list by ID
+            boolean deletionConfirmed = View.confirmDeletion(); // Ask user for confirmation to delete item
+            if (deletionConfirmed) { // If user has confirmed (true), use the items method to submit the deletion
+                foundItem.submitDeleteItem();
+            }
+            StoreController.start(); // reset application.
+        } catch (IOException error) {
+            View.tryInputAgain("Item with that ID does not exist: ", ItemController::deleteItem);
+        }
     }
 
     /**
@@ -75,63 +132,5 @@ public class ItemController {
         }
         System.out.println("\nItem not found. Please try again");
         throw new IOException("Selected item does not exist");
-    }
-
-    /**
-     * Method responsible for the 'delete item' option in the main menu, handles allowing the user to delete an Item and
-     * displays CLI elements for the user to interact with.
-     */
-    public static void deleteItem() {
-        initializeItemList();
-        /* ConsoleView.displayItems returns an item ID, if it returns -1, it means the user selected the option to return
-        to the main menu, therefore we will return back to the main menu with a conditional if statement,
-        if an actual ID is returned, the program will continue */
-        int selectedItem = View.displayItems(items, "SELECT ITEM TO DELETE");
-        if (selectedItem == -1) {
-            View.displayMainMenu();
-            return;
-        }
-        System.out.println("Selected Item ID: " + selectedItem);
-
-        /* Try to find the Item with the matching ID from the ArrayList of Items, if no Item is found, the User will be
-        prompted again to input a valid ID */
-        try {
-            Item foundItem = findItemByID(items, selectedItem);
-            View.confirmDeletion(foundItem);
-            StoreController.start();
-        } catch (IOException error) {
-            View.tryInputAgain("Item with that ID does not exist: ", ItemController::deleteItem);
-        }
-    }
-
-    /**
-     * Displays CLI elements and performs logic for editing the quantity of an Item. Calls ConsoleView and ItemStorage.
-     */
-    public static void editItemQuantity() {
-        initializeItemList(); // initialize a list of existing items.
-        int selectedItem = View.displayItems(items, "SELECT ITEM TO UPDATE QUANTITY");
-        if (selectedItem == -1) { // catch error and return to main menu.
-            View.displayMainMenu();
-            return;
-        }
-        System.out.println("Selected Item ID: " + selectedItem);
-        try {
-            Item itemToUpdate = findItemByID(items, selectedItem); // Get instance of Item class by the ID.
-
-            // Set new quantity and write update to file
-            double newQuantity = View.getInput("Enter New Quantity: ", Double::parseDouble);
-            itemToUpdate.setQtyInStock(newQuantity);
-            System.out.println("New Quantity: " + itemToUpdate.getQtyInStock());
-            System.out.println("Old Quantity: " + itemToUpdate.getPreviousQuantityInStock());
-            itemToUpdate.submitUpdatedItem();
-
-            StoreController.start(); // Fully Reset Application upon completion
-        } catch (IOException error) {
-            /* If findItemByID returns an error due to not being able to match an Item with the ID provided
-               we try again calling editItemQuantity with a Lambda function (Also known as an anonymous or unnamed function)
-               and passing in the items as an argument.
-             */
-            View.tryInputAgain("Item with that ID does not exist: ", ItemController::editItemQuantity);
-        }
     }
 }
