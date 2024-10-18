@@ -12,7 +12,12 @@ import java.util.ArrayList;
  */
 public class IDGenerator {
 
-    private static final ArrayList<Integer> inUseIDs = new ArrayList<>();
+    private static ArrayList<Integer> inUseIDs = new ArrayList<>();
+
+    // This is to make testing with a set of IDs possible and is not used in the program code itself.
+    public static void setInUseIDs(ArrayList<Integer> ids) {
+        inUseIDs = ids;
+    }
 
     /**
      * Public method for generating a new ID
@@ -22,37 +27,38 @@ public class IDGenerator {
         readItemIDs();
         readTransactionIDs();
 
-        int maxID = 10000; // Start from 10000 to ensure 5-digit IDs, TODO : This could be improved to do it from 00000
-
-        /* I loop through the inUseIds and if it is bigger or equal to maxID we set it to the ID + 1, this means we only
-        have to loop through the in use IDs, the alternative approach would be to loop through EVERY number starting from
-        10000 and check if it is in use, however this would be far more expensive, the downside with my method is that it
-        is possible that some IDs are not able to be re-used, since the maxID will always be the biggest inUse int + 1
+        /* Cannot store leading zeroes in an int so start from the lowest possible, another method would be to store
+        the ID as a string, to allow for an ID of 00001, I will attempt this in Part 2 to resolve this shortcoming.
          */
-        for (int id : inUseIDs) {
-            if (id >= maxID) {
-                maxID = id + 1;
+        int generatedID = 10000;
+
+        final int maxPossible = 99999;
+
+        // Increments the generatedID until it finds an integer that is not in the inUse array
+        for (int i = generatedID; i < maxPossible; i++ ) {
+            if (!inUseIDs.contains(generatedID)) {
+                break; // If the generatedID is not in use then break the loop and continue;
             }
+            generatedID++; // Else increment the generatedID and continue loop
         }
-        if (maxID > 99999) {
+
+        if (generatedID > maxPossible) {
             System.out.println("Error: Maximum ID limit reached.");
-            /* The assignment specifically asked for a 5 Digit ID which would cause this to eventually happen
-               in a real world project I would use something like a UUID (Unique Universal Identifier) which would remove
-               the possibility of running out of ID's, I also wouldn't have to check the exising IDs to make sure I
-               wasn't duplicating an ID since each UUID is unique and the chances of getting a duplicate is astronomically
-               small (1 in a billion which for this project is fine, however some larger corporate projects may need more
-               certainty).
-             */
-            return -1; // Indicate that ID generation failed
+            /* The assignment specifically asked for a 5-Digit ID which would cause this to eventually happen. In a real
+            world project I would use something like a UUID (Unique Universal Identifier) which would remove the
+            possibility of running out of ID's, I also wouldn't have to check the exising IDs to make sure I wasn't
+            duplicating an ID since each UUID is unique and the chances of getting a duplicate is astronomically
+            small */
+            return -1; // Indicate that ID generation failed.
         }
-        inUseIDs.add(maxID);
-        return maxID;
+        inUseIDs.add(generatedID); // Add to in use ID's
+        return generatedID; // Return the ID
     }
 
     /**
      * Reads ItemID's and Adds them to the inUseIDs Array
      */
-    private static void readItemIDs() {
+    static void readItemIDs() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FileManager.ITEMS_FILE_PATH))) {
             String line;
             // Skip the header line
@@ -75,7 +81,7 @@ public class IDGenerator {
     /**
      * Reads TransactionIDs and adds them to the inUseIDs Array
      */
-    private static void readTransactionIDs() {
+    static void readTransactionIDs() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FileManager.TRANSACTIONS_FILE_PATH))) {
             String line;
             // Skip the header line
