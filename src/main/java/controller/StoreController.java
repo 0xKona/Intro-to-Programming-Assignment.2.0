@@ -48,7 +48,7 @@ public class StoreController {
                 break;
             }
             case 5: {
-                System.exit(0);
+                exitProgram(0);
                 break;
             }
             default: {
@@ -60,5 +60,9 @@ public class StoreController {
                 break;
             }
         }
+    }
+
+    public static void exitProgram (int statusCode) {
+        System.exit(statusCode);
     }
 }

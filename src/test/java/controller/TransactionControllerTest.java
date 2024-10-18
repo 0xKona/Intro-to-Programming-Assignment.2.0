@@ -1,15 +1,13 @@
 package controller;
 
-import models.Item;
 import models.Transaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import storage.ItemStorage;
 import storage.TransactionStorage;
-import testModels.MockModels;
+import testData.MockData;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -31,7 +29,7 @@ public class TransactionControllerTest {
     @DisplayName("Initializing Transaction List should work correctly on success")
     void testInitializeTransactionList_Success() throws IOException {
         // Create an ArrayList of mock items to be returned when the read items method is called
-        ArrayList<Transaction> mockTransactions = MockModels.getMockTransactionsList();
+        ArrayList<Transaction> mockTransactions = MockData.getMockTransactionsList();
 
         try {
             /* Mock the item storage class using Mockito, this ensures that when we run our tests we do
@@ -50,7 +48,8 @@ public class TransactionControllerTest {
             ArrayList<Transaction> transactions = (ArrayList<Transaction>) transactionsField.get(null);  // Get the static field value
 
             Assertions.assertEquals(mockTransactions, transactions );
-            mockedTransactionStorage.verify(ItemStorage::readItems, times(1));
+            mockedTransactionStorage.verify(TransactionStorage::readTransactions, times(1));
+            mockedTransactionStorage.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

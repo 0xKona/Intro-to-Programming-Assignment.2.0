@@ -1,8 +1,6 @@
 package controller;
 
 import main.View;
-import mockit.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -57,30 +55,20 @@ public class StoreControllerTest {
         }
     }
 
-    /* To test System.exit we needed to use the JMockit dependency this allows us to mock the System class
-    without calling the exit method itself and ending the test before it could finish, there were other methods that
-    were tried however all of which were deprecated after Java 17 or caused security errors on my machine,
-    it is possible however that was caused by organisational policies. However, the JMockit library makes it
-    possible to test System exit operations safely. */
     @Test
     @DisplayName("mainMenuRouting should call System.exit when user enters 5")
     void testRouterRoutesUserToExitProgram() {
-        // Mock System.exit to throw a RuntimeException instead of exiting
-        new MockUp<System>() {
-            @Mock
-            public void exit(int value) {
-                throw new RuntimeException(String.valueOf(value)); // Throw exception with the exit code
-            }
-        };
+        try (MockedStatic<StoreController> mockedController = Mockito.mockStatic(StoreController.class)) {
 
-        // Assert that the RuntimeException is thrown with the expected exit code (0)
-        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> {
-            // Call mainMenuRouting with input 5, which should trigger System.exit(0)
+            // Mock the exitProgram method to prevent it from actually calling System.exit
+            mockedController.when(() -> StoreController.mainMenuRouting(5)).thenCallRealMethod();
+
+            // Call the method that triggers exitProgram
             StoreController.mainMenuRouting(5);
-        });
 
-        // Verify that System.exit was called with the expected status code (0)
-        assert(exception.getMessage().equals("0"));  // The exit code should be passed in the exception
+            // Verify that exitProgram was called with argument 0
+            mockedController.verify(() -> StoreController.exitProgram(0), Mockito.times(1));
+        }
     }
 
     @Test

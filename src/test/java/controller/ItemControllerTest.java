@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import storage.ItemStorage;
-import testModels.MockModels;
+import testData.MockData;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -29,7 +29,7 @@ public class ItemControllerTest {
     @DisplayName("Initializing Item List should work correctly on success")
     void testInitializeItemList_Success() throws IOException {
         // Create an ArrayList of mock items to be returned when the read items method is called
-        ArrayList<Item> mockItems = MockModels.getMockItemsList();
+        ArrayList<Item> mockItems = MockData.getMockItemsList();
 
         try {
             /* Mock the item storage class using Mockito, this ensures that when we run our tests we do
@@ -49,6 +49,8 @@ public class ItemControllerTest {
 
             Assertions.assertEquals(mockItems, items );
             mockedItemStorage.verify(ItemStorage::readItems, times(1));
+
+            mockedItemStorage.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

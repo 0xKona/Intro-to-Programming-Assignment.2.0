@@ -1,4 +1,4 @@
-package testModels;
+package testData;
 
 import models.Item;
 import models.Transaction;
@@ -8,7 +8,7 @@ import utils.TimestampGenerator;
 
 import java.util.ArrayList;
 
-public class MockModels {
+public class MockData {
 
     public static Item getMockItem(int mockID, String mockName) {
         Item item = new Item();
