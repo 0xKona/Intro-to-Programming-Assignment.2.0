@@ -18,7 +18,7 @@ public class TransactionController {
     /* initializeTransactionList reads the transactions from the file storage and stores then in an ArrayList for usage
     by the other methods in the class */
     private static ArrayList<Transaction> transactions;
-    private static void initializeTransactionList() {
+    static void initializeTransactionList() {
         try {
             transactions = TransactionStorage.readTransactions();
         } catch (FileNotFoundException e) { // Handle error reading file.

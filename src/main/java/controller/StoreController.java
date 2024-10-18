@@ -49,6 +49,7 @@ public class StoreController {
             }
             case 5: {
                 System.exit(0);
+                break;
             }
             default: {
                 // If capturedInput does not match any of the defined cases, input is invalid and user should try again.

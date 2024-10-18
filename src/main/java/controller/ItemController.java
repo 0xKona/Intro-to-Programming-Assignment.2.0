@@ -19,7 +19,9 @@ public class ItemController {
 
     // Initialize reads items from storage and assigns them to the variable "Items" for usage by the various methods
     private static ArrayList<Item> items;
-    private static void initializeItemList() {
+
+    // Removed private from this method in order to make it package private and accessible for testing
+    static void initializeItemList() {
         try {
             items = ItemStorage.readItems();
         } catch (IOException e) {
