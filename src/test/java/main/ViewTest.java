@@ -1,10 +1,13 @@
 package main;
 
+import controller.StoreController;
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,6 +22,7 @@ public class ViewTest {
 
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final InputStream originalIn = System.in;
 
     @BeforeEach
     void setUpStreams() {
@@ -28,6 +32,7 @@ public class ViewTest {
     @AfterEach
     void restoreStreams() {
         System.setOut(originalOut); // Restore original System.out after test
+        System.setIn(originalIn); // Restore System.in after tests
     }
 
     @Test
@@ -53,6 +58,22 @@ public class ViewTest {
 
             // Verify handleMainMenuChoice was called exactly once
             mockedView.verify(View::handleMainMenuChoice, Mockito.times(1));
+        }
+    }
+
+    @Test
+    @DisplayName("Handle main menu choice should call main menu routing with user input")
+    void testHandleMainMenuChoice() {
+        // Simulate user input "1\n" (for selecting option 1: Add New Item)
+        String simulatedInput = "1\n";
+        ByteArrayInputStream simulatedIn = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(simulatedIn);
+
+        try (MockedStatic<StoreController> mockedStoreController = Mockito.mockStatic(StoreController.class)) {
+            View.handleMainMenuChoice(); // Call Method
+
+            // Verify mainMenuRouting was called with the simulated input.
+            mockedStoreController.verify(() -> StoreController.mainMenuRouting(1), Mockito.times(1));
         }
     }
 }
