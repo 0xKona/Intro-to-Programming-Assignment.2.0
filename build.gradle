@@ -18,6 +18,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    maxHeapSize = "1g" // Set max heap size to 1GB
+    jvmArgs = ["-Xmx1g", "-Xms512m", "-XX:MaxMetaspaceSize=256m"]
 }
 
 tasks.withType(Test).configureEach {

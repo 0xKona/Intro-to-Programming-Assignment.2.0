@@ -32,7 +32,7 @@ public class FileManager {
     public static final String TRANSACTIONS_FILE_PATH = "transactions.txt";
 
     // Checks if the items file exists, if not it tries to create the file with the headers
-    private static void checkItemsFile() {
+    static void checkItemsFile() {
         // Initialize a file with the relevant path
         File itemsFile = new File(ITEMS_FILE_PATH);
         if (!itemsFile.exists()) { // Check if file exists at that path
@@ -53,7 +53,7 @@ public class FileManager {
 
     /* Checks if the transactions file exists, if not it tries to create the file with the headers. following the same
     process as checkItemsFile() */
-    private static void checkTransactionsFile() {
+    static void checkTransactionsFile() {
         File transactionsFile = new File(TRANSACTIONS_FILE_PATH);
         if (!transactionsFile.exists()) {
             try (FileWriter writer = new FileWriter(transactionsFile)) {
