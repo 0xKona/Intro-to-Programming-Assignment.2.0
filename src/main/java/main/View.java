@@ -211,8 +211,8 @@ public class View {
      * @param transactions The list of {@link Transaction} objects to be displayed.
      */
     public static void displayTransactions(ArrayList<Transaction> transactions) {
-        String headerFormat =          "%-8s %-30s %-20s %-20s %-20s %-20s %-12s";
-        String transactionFormat =     "%-8d %-30s %-20f %-20f %-20f %-20s %-12s";
+        String headerFormat =          "%-8s %-30s %-20s %-20s %-20s %-20s %-20s";
+        String transactionFormat =     "%-8d %-30s %-20f %-20f %-20f %-20s %-20s";
 
         String header = String.format((headerFormat) + "%n",
                 "ID",
