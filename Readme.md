@@ -1,6 +1,7 @@
 # Intro to Programming Assignment - PART ONE
 
 # Overview:
+- This is a Java based program to manage inventory, it includes the capability to add items, update their quantity and delete them, for each action a transaction is generated, recording the action permanently.
 - The code in this branch is for Part One of the assignment, it comprises a CLI user interface and a text file
   based storage system acting as a basic "database".
 - The project uses [Gradle](https://gradle.org/) as it's dependency manager and build tool.
