@@ -62,6 +62,7 @@ public class StoreController {
         }
     }
 
+    // Wrapper method for System.exit that makes it easier to test without actually exiting the program.
     public static void exitProgram (int statusCode) {
         System.exit(statusCode);
     }

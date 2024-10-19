@@ -1,0 +1,136 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class FileManager {
+  + initializeStorage(): void
+  ~ checkTransactionsFile(): void
+  ~ checkItemsFile(): void
+}
+class IDGenerator {
+  ~ readTransactionIDs(): void
+  ~ readItemIDs(): void
+  + setInUseIDs(ArrayList<Integer>): void
+  + generateNewID(): int
+}
+class Item {
+  - calculateTotalValue(): void
+  + getTotalValue(): double
+  + getName(): String
+  + submitNewItem(): void
+  + getId(): int
+  + getPreviousTotalValue(): double
+  + setName(String): void
+  + setId(int): void
+  + getUnitPrice(): double
+  + submitDeleteItem(): void
+  + submitUpdatedItem(): void
+  + setUnitPrice(double): void
+  + setQtyInStock(double): void
+  + getPreviousQuantityInStock(): double
+  + getQtyInStock(): double
+}
+class ItemController {
+  + addNewItem(): void
+  ~ initializeItemList(): void
+  + editItemQuantity(): void
+  + deleteItem(): void
+  - findItemByID(ArrayList<Item>, int): Item
+}
+class ItemStorage {
+  + updateItem(Item): void
+  - writeLinesBackToFile(ArrayList<String>): void
+  + writeNewItemToStorage(Item): void
+  + deleteItem(Item): void
+  + readItems(): ArrayList<Item>
+  - readLinesIntoList(): ArrayList<String>
+  - formatItemToString(Item): String
+}
+class Store {
+  + main(String[]): void
+}
+class StoreController {
+  + start(): void
+  + mainMenuRouting(int): void
+  + exitProgram(int): void
+}
+class TimestampGenerator {
+  + getCurrentTime(): String
+}
+class Transaction {
+  + generate(Item, TransactionType): void
+  + setDescription(String): void
+  + getTimestamp(): String
+  + setQuantityRemaining(double): void
+  + setQuantityChange(double): void
+  + setValueChange(double): void
+  + setTransactionType(TransactionType): void
+  + getTransactionType(): TransactionType
+  + getId(): int
+  + setId(int): void
+  + getDescription(): String
+  + getQuantityChange(): double
+  + getValueChange(): double
+  + getQuantityRemaining(): double
+  + setTimestamp(String): void
+}
+class TransactionController {
+  ~ initializeTransactionList(): void
+  - filterTransactionsByDate(ArrayList<Transaction>): ArrayList<Transaction>
+  + generateDailyTransactionReport(): void
+}
+class TransactionStorage {
+  + writeNewTransaction(Transaction): void
+  + readTransactions(): ArrayList<Transaction>
+}
+enum TransactionType << enumeration >> {
+  + values(): TransactionType[]
+  + valueOf(String): TransactionType
+}
+class View {
+  + displayTransactions(ArrayList<Transaction>): void
+  + tryInputAgain(String, UserAction): void
+  + displayAddNewItemHeader(): void
+  + handleMainMenuChoice(): void
+  + displayItems(ArrayList<Item>, String): int
+  + confirmDeletion(): boolean
+  + promptNewItemConfirmation(Item): boolean
+  + displayMainMenu(): void
+  + getInput(String, Function<String, T>): T
+  - exitToMainMenu(): void
+}
+
+IDGenerator            -[#595959,dashed]->  FileManager
+Item                   -[#595959,dashed]->  ItemStorage
+Item                   -[#595959,dashed]->  Transaction
+Item                   -[#595959,dashed]->  TransactionType
+ItemController         -[#595959,dashed]->  IDGenerator
+ItemController         -[#595959,dashed]->  Item
+ItemController         -[#595959,dashed]->  ItemStorage
+ItemController         -[#595959,dashed]->  StoreController
+ItemController         -[#595959,dashed]->  View
+ItemStorage            -[#595959,dashed]->  FileManager
+ItemStorage            -[#595959,dashed]->  Item
+Store                  -[#595959,dashed]->  FileManager
+Store                  -[#595959,dashed]->  StoreController
+StoreController        -[#595959,dashed]->  ItemController
+StoreController        -[#595959,dashed]->  TransactionController
+StoreController        -[#595959,dashed]->  View
+Transaction            -[#595959,dashed]->  IDGenerator
+Transaction            -[#595959,dashed]->  Item
+Transaction            -[#595959,dashed]->  TimestampGenerator
+Transaction            -[#595959,dashed]->  TransactionStorage
+Transaction            -[#595959,dashed]->  TransactionType
+TransactionController  -[#595959,dashed]->  TimestampGenerator
+TransactionController  -[#595959,dashed]->  Transaction
+TransactionController  -[#595959,dashed]->  TransactionStorage
+TransactionController  -[#595959,dashed]->  View
+TransactionStorage     -[#595959,dashed]->  FileManager
+TransactionStorage     -[#595959,dashed]->  Transaction
+TransactionStorage     -[#595959,dashed]->  TransactionType
+View                   -[#595959,dashed]->  Item
+View                   -[#595959,dashed]->  StoreController
+View                   -[#595959,dashed]->  Transaction
+@enduml

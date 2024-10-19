@@ -24,7 +24,7 @@ import utils.TimestampGenerator;
  * <li>{@link #setTimestamp(String)}</li>
  * <li>{@link #generate(Item, TransactionType)}</li>
  */
-public class Transaction {
+public class Transaction extends Item {
     private int id;
     private String description;
     private double quantityChange;
