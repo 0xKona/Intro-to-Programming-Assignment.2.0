@@ -27,16 +27,24 @@
 - You may notice that eclipse generate some files when it opens the project, this is fine and is normal.
 
 
-## Creating a build and Running it
+## Creating an un-packaged build and Running it
+
+- Run `./gradlew jlink`
+- This will create a build in `build/image` to run it, run the following command form the root of the project:
+- `./build/image/bin/InventoryManagementSystem` or you can simply double-click on it.
 
 ## Running the example build
 
-- Included is an executable build of the GUI application, There are two ways you can open it:
-- 1.) Double Click! Open the `exampleBuild` and double click on the InventoryManagementSystem 
-- ```java -jar exampleBuild/InventoryManagementSystem-1.0-SNAPSHOT.jar```
-- You may need Java 21 or above to run the jar.
-- You can also create a new build by running ./gradlew clean build, the generated build will be located in `build/libs` and can be run with this command:
-- ```java -jar build/libs/InventoryManagementSystem-1.0-SNAPSHOT.jar```
+- Included is an executable build of the GUI application
+- 1.) Double Click! Open the `exampleBuild` and double-click on the InventoryManagementSystem.app (for macOS).
+
+## Running an executable .jar file
+
+-By default, this project uses gradle to download and handle dependencies which means the JDK that specifically runs JavaFX is not installed on my machine meaning whilst a .jar file is successfully built using `./gradlew build` I cannot run it as the JavaFX Runtime is not bundled inside this Jar which is why the above build processes are used instead, theoretically however you should be able to run a .jar file generated with the following steps provided you have the JavaFX runtime locally installed on your machine.
+- 1.) At the root of the project in a terminal run `.gradlew build` to build the project.
+- 2.) The .jar file will be located in `build/libs`
+- 3.) To run it execute the following command in your terminal at the root of the project `java -jar build/libs/InventoryManagementSystem-2.0.0.jar`
+
 
 ## Documentation:
 - Each class and public method has a Java Doc comment explaining its function and any arguments required and return values.
