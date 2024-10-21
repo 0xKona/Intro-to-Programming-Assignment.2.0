@@ -70,12 +70,16 @@ public class ItemController {
     public TableView<Item> itemTable;
 
     public void initialize() {
-        // Set TableView to be editable, this will allow the user to edit the field directly later.
+        /* Conditionally initialize itemTable, this is necessary due to the fact that my two fxml views are using this
+        same controller, which means that when add-item-view.fxml is loaded it tries to initialize the TableView used in
+        edit-items-view which causes a null exception, to fix this I simply need to do a not null check here first however
+        a more robust solution would be to seperate this ItemController class into two seperate controllers for each fxml
+        file. */
         if (itemTable != null) {
+            // Set TableView to be editable, this will allow the user to edit the field directly later.
             itemTable.setEditable(Boolean.TRUE);
 
             // Retrieve all Items from the database and store them in an ArrayList variable.
-    //        ArrayList<Item> itemList = ItemManagerDB.getAllItems();
             ArrayList<Item> itemList = ItemStorage.readItems();
             /* Convert it to an ObservableList that can be used by the TableView, This allows for changes to Objects in the
             list to be reflected in the table view */

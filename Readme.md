@@ -1,4 +1,4 @@
-# Intro to Programming Assignment - PART ONE
+# Intro to Programming Assignment - PART TWO
 
 # Overview:
 - This is a Java based program to manage inventory, it includes the capability to add items, update their quantity and delete them, for each action a transaction is generated, recording the action permanently.
@@ -13,7 +13,7 @@
 
 - To download the repository files, Clone the repository from GitHub [here](https://github.com/0xKona/I2PAssignmentv2)
 - If you don't know how to clone the files from GitHub, follow [this](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide.
-- You'll need to use `git checkout part-1` to go to the PART ONE branch, run this in a terminal at the root of the project. [You will need GIT installed for this to work](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- You'll need to use `git checkout part-2` to go to the PART TWO branch however the main branch will show the most up-to-date version as well, run this in a terminal at the root of the project. [You will need GIT installed for this to work](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - If you have the files already (I.E When I submit this as a ZIP file etc.) you can skip the above steps
 - Open the project in IntelliJ using `file -> open -> navigate the folder location`
 - Ensure project is saved inside a folder named `InventoryManagementSystem` if it is not already, failure to do so has been known to cause issues in development mode
@@ -27,11 +27,12 @@
 - You may notice that eclipse generate some files when it opens the project, this is fine and is normal.
 
 
+## Creating a build and Running it
 
+## Running the example build
 
-## Running a .jar build:
-
-- Included is an executable jar file, you can run this by opening a terminal in the root of the project and running the following command:
+- Included is an executable build of the GUI application, There are two ways you can open it:
+- 1.) Double Click! Open the `exampleBuild` and double click on the InventoryManagementSystem 
 - ```java -jar exampleBuild/InventoryManagementSystem-1.0-SNAPSHOT.jar```
 - You may need Java 21 or above to run the jar.
 - You can also create a new build by running ./gradlew clean build, the generated build will be located in `build/libs` and can be run with this command:

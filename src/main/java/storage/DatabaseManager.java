@@ -14,7 +14,7 @@ public class DatabaseManager {
     /* Database URL (H2 in file mode, it will create a file called "inventoryDB" in projects root directory)
     Note: Variable is a constant and will not change, therefore it is fully capitalized as per oracles naming
     conventions. */
-    private static final String DB_URL = "jdbc:h2:./inventoryDB";
+    private static final String DB_URL = "jdbc:h2:" + System.getProperty("user.home") + "/inventoryDB";
 
     /* Set the databases username and password, as this is a minimum viable product I will not be setting a password
     however in production this would be essential and managed with something like a .env variable */

@@ -1,9 +1,8 @@
 package main;
 
+import javafx.application.Application;
 import javafx.stage.Stage;
 import storage.DatabaseManager;
-import javafx.application.Application;
-
 
 /**
  * Main class of that starts the application, initializes the storage and then loads the main menu.
