@@ -2,10 +2,13 @@ package storage;
 
 import models.Transaction;
 import models.TransactionType;
+import utils.TimestampGenerator;
 
-import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 /**
  * Handles the text file storage for Transactions
@@ -18,53 +21,65 @@ import java.util.stream.Stream;
 public class TransactionStorage {
 
     /**
-     * Writes the new Transaction into storage
+     * Takes in a Transaction Object and inserts it into the database.
+     * @param transaction Transaction Object
+     * @throws SQLException Error message if fails to add to database
      */
     public static void writeNewTransaction(Transaction transaction) {
-        String transactionAsString = String.format("\n%s,%s,%s,%s,%s,%s,%s", // Format Transaction into a writeable string
-                transaction.getId(),
-                transaction.getDescription(),
-                transaction.getQuantityChange(),
-                transaction.getValueChange(),
-                transaction.getQuantityRemaining(),
-                transaction.getTransactionType(),
-                transaction.getTimestamp()
-        );
-
-        /* Setting the second argument in FileWriter to true means that append is set to true, which means lines will be
-            written to the END of the file, and won't overwrite anything.
-         */
-        try (Writer output = new FileWriter(FileManager.TRANSACTIONS_FILE_PATH, true)) {
-            output.append(transactionAsString);
-        } catch (IOException e) {
-            System.out.println("An error occurred while trying to write the new line to the file: " + e);
+        // SQL Statement; '?' is an argument that can be passed in later
+        String sqlStatement = "INSERT INTO Transactions (id, description, quantityChange, quantityRemaining, valueChange, transactionType, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            int newID = DatabaseManager.generateUniqueID("Transactions"); // Generate a unique ID for the relevant table.
+            Connection connection = DatabaseManager.connect(); // Connect to Database
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement); // Initialize the statement
+            // Pass arguments to SQL statement.
+            preparedStatement.setInt(1, newID);
+            preparedStatement.setString(2, transaction.getDescription());
+            preparedStatement.setDouble(3, transaction.getQuantityChange());
+            preparedStatement.setDouble(4, transaction.getQuantityRemaining());
+            preparedStatement.setDouble(5, transaction.getValueChange());
+            preparedStatement.setString(6, transaction.getTransactionType().toString());
+            preparedStatement.setString(7, transaction.getTimestamp());
+            // Execute the SQL query.
+            preparedStatement.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
         }
     }
 
     /**
-     * Reads transactions from storage and returns them in an ArrayList.
-     * @return ArrayList of Transactions
+     * Get all transactions between a start and end time String in the format "yyyy-MM-dd HH:mm:ss"
+     * @return ArrayList of Transaction Objects.
      */
-    public static ArrayList<Transaction> readTransactions() throws FileNotFoundException {
-        BufferedReader reader = new BufferedReader(new FileReader(FileManager.TRANSACTIONS_FILE_PATH)); // Buffered Reader reads file line by line
-        Stream<String> lines = reader.lines().skip(1); // Skip the first header line.
-        ArrayList<Transaction> transactions = new ArrayList<>(); // Initialize ArrayList of Transactions
-        lines.forEach(currentLine -> {
-            if (currentLine.isEmpty()) { // If current line is empty return and continue to next line
-                return;
-            } else {
-                String[] splitLine = currentLine.split(",");
-                Transaction transaction = new Transaction(); // Initialize new transaction object.
-                transaction.setId(Integer.parseInt(splitLine[0]));
-                transaction.setDescription(splitLine[1]);
-                transaction.setQuantityChange(Double.parseDouble(splitLine[2]));
-                transaction.setValueChange(Double.parseDouble(splitLine[3]));
-                transaction.setQuantityRemaining(Double.parseDouble(splitLine[4]));
-                transaction.setTransactionType(TransactionType.valueOf(splitLine[5]));
-                transaction.setTimestamp(splitLine[6]);
-                transactions.add(transaction); // after setting elements, add object to ArrayList.
+    public static ArrayList<Transaction> readTransactions(String startDate, String endDate) {
+        ArrayList<Transaction> transactions = new ArrayList<>(); // Initialize ArrayList of Objects
+
+        String sqlQuery = "SELECT * FROM Transactions WHERE timestamp >= ? AND timestamp <= ?"; // SQL Query
+
+        try {
+            Connection connection = DatabaseManager.connect(); // Connect to database
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery); // Initialize the query.
+            // Pass arguments to initialized query.
+            preparedStatement.setString(1, startDate);
+            preparedStatement.setString(2, endDate);
+            // Save results to a ResultSet variable
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) { // Loop through resultSet and create Transaction Objects and add them to ArrayList
+                Transaction transaction = new Transaction();
+                transaction.setId(DatabaseManager.formatID(resultSet.getInt("id")));
+                transaction.setDescription(resultSet.getString("description"));
+                transaction.setQuantityChange(resultSet.getInt("quantityChange"));
+                transaction.setQuantityRemaining(resultSet.getInt("quantityRemaining"));
+                transaction.setValueChange(resultSet.getInt("valueChange"));
+                transaction.setTransactionType(TransactionType.valueOf(resultSet.getString("transactionType")));
+                transaction.setTimestamp(resultSet.getString("timestamp"));
+                transactions.add(transaction);
             }
-        });
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return transactions;
-    }
+    };
 }

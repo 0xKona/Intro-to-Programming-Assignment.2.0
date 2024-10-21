@@ -19,4 +19,18 @@ public class TimestampGenerator {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return now.format(formatter);
     }
+
+    public static String getCurrentDayStart() {
+        LocalDateTime now = LocalDateTime.now().toLocalDate().atStartOfDay();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String startOfDay = now.format(formatter);
+        return startOfDay;
+    }
+
+    public static String getCurrentDayEnd() {
+        LocalDateTime now = LocalDateTime.now().toLocalDate().atTime(23, 59, 59);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String endOfDay = now.format(formatter);
+        return endOfDay;
+    }
 }

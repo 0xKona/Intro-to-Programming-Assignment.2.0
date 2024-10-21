@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.14' // Updated plugin version
 }
 
 group = 'com.inventorymanagement'
@@ -11,21 +13,45 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.openjfx:javafx-controls:21.0.4'
+    implementation 'org.openjfx:javafx-fxml:21.0.4'
+    implementation 'org.openjfx:javafx-graphics:21.0.4'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.mockito:mockito-core:5.5.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+    implementation 'com.h2database:h2:2.1.214'
+}
+
+application {
+    mainClass = 'main.Store'
+}
+
+javafx {
+    version = '21.0.4'
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
 }
 
 test {
     useJUnitPlatform()
-    maxHeapSize = "1g" // Set max heap size to 1GB
+    maxHeapSize = "1g"
     jvmArgs = ["-Xmx1g", "-Xms512m", "-XX:MaxMetaspaceSize=256m"]
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
     }
 
-    // Ensure tests are executed before the coverage report is generated
     finalizedBy jacocoTestReport
 }
 
@@ -45,17 +71,15 @@ jar {
     }
 }
 
-// JaCoCo configuration
 jacoco {
-    toolVersion = "0.8.10" // Specify JaCoCo version
+    toolVersion = "0.8.10"
 }
 
-// Generate the coverage report
 jacocoTestReport {
-    dependsOn test // Ensure tests run before generating the report
+    dependsOn test
     reports {
         xml.required = false
         csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml') // Set HTML report location
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }

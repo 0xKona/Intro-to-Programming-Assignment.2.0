@@ -1,138 +1,195 @@
 package controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 import main.View;
 import models.Item;
 import storage.ItemStorage;
-import utils.IDGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Holds methods responsible for the logic of adding, updating and deleting items.
  * <p>Methods:</p>
- * <li>{@link #addNewItem()}</li>
- * <li>{@link #editItemQuantity()}</li>
- * <li>{@link #deleteItem()}</li>
  */
 public class ItemController {
 
-    // Initialize reads items from storage and assigns them to the variable "Items" for usage by the various methods
-    private static ArrayList<Item> items;
-
-    // Removed private from this method in order to make it package private and accessible for testing
-    static void initializeItemList() {
-        try {
-            items = ItemStorage.readItems();
-        } catch (IOException e) {
-            System.out.println("Error reading items from file: " + e.getMessage());
-            System.exit(1);
-        }
+    @FXML
+    public void navigateHome() throws IOException {
+        View.navigateToMainMenu();
     }
 
-    /**
-     * Displays CLI elements and performs logic for adding a new Item. Calling View.
-     */
-    public static void addNewItem() {
-        View.displayAddNewItemHeader(); // Display user interface in CLI
-        Item newItem = new Item(); // Create a new object from the Item class
-        newItem.setId(IDGenerator.generateNewID()); // Set the ID.
+    /* BELOW CODE IS FOR ADDING A NEW ITEM */
+    private static Item newItem;
 
-        /* For each value call View.getInput, passing in a prompt and a parser to ensure we get the correct
-           type back, the default is a String so in the Item Name one we simply pass a function that returns the input,
-           however for the others I need to pass the parseDouble function that parses a String to a double.
-         */
-        String itemName = View.getInput("Enter Item Name: ", input -> input);
-        newItem.setName(itemName);
-
-        double itemPrice = View.getInput("Enter Items Unit Price [£]: ", Double::parseDouble);
-        newItem.setUnitPrice(itemPrice);
-
-        double itemQty = View.getInput("Enter Items Quantity [Units]: ", Double::parseDouble);
-        newItem.setQtyInStock(itemQty);
-
-        boolean userHasConfirmed = View.promptNewItemConfirmation(newItem); // Prompt user to confirm item
-
-        if (userHasConfirmed) { // Conditional logic depending on user confirmation.
-            newItem.submitNewItem(); // Add new item by using method in the Item class.
-            System.out.println(newItem.getName() + " has been submitted.");
-        } else {
-            System.out.println(newItem.getName() + " has not been submitted.");
-        }
-        StoreController.start(); // Return the user back to the home screen.
+    public static void initializeNewItem() {
+        newItem = new Item();
     }
 
-    /**
-     * Displays CLI elements and performs logic for editing the quantity of an Item.
-     */
-    public static void editItemQuantity() {
-        initializeItemList(); // initialize a list of existing items.
-        int selectedItem = View.displayItems(items, "SELECT ITEM TO UPDATE QUANTITY");
-        if (selectedItem == -1) { // return to main menu on rejection.
-            View.displayMainMenu();
-            return;
-        }
-        try {
-            Item itemToUpdate = findItemByID(items, selectedItem); // Get instance of Item class by the ID.
-            System.out.printf("\nEditing: %s [ID: %d]", itemToUpdate.getName(), itemToUpdate.getId());
-            System.out.println("\nCurrent quantity: " + itemToUpdate.getQtyInStock());
-
-            double newQuantity = View.getInput("Enter New Quantity: ", Double::parseDouble); // Get newQty
-            itemToUpdate.setQtyInStock(newQuantity); // set newQty to object
-            itemToUpdate.submitUpdatedItem(); // update item in storage using method in Item class.
-
-            StoreController.start(); // Fully Reset Application upon completion
-        } catch (IOException error) {
-            /* If findItemByID returns an error due to not being able to match an Item with the ID provided
-               we try again calling editItemQuantity with a Lambda function (Also known as an anonymous or unnamed function)
-               and passing in the items as an argument.
-             */
-            View.tryInputAgain("Item with that ID does not exist: ", ItemController::editItemQuantity);
-        }
+    // Update newitem name
+    @FXML
+    private TextField itemNameField;
+    @FXML
+    public void updateNewItemName() throws IOException {
+        String newItemName = itemNameField.getText();
+        newItem.setName(newItemName);
     }
 
-    /**
-     * Method responsible for the 'delete item' option in the main menu, handles allowing the user to delete an Item and
-     * displaying CLI elements for the user to interact with.
-     */
-    public static void deleteItem() {
-        initializeItemList(); // Initialize the ArrayList of Items.
-        /* ConsoleView.displayItems returns an item ID, if it returns -1, it means the user selected the option to return
-        to the main menu, therefore we will return back to the main menu with a conditional if statement,
-        if an actual ID is returned, the program will continue */
-        int selectedItem = View.displayItems(items, "SELECT ITEM TO DELETE"); // Prompt user to select an Item.
-        if (selectedItem == -1) {
-            View.displayMainMenu(); // Return to main menu on rejection
-            return;
-        }
-        /* Try to find the Item with the matching ID from the ArrayList of Items, if no Item is found, the User will be
-        prompted again to input a valid ID */
-        try {
-            Item foundItem = findItemByID(items, selectedItem); // Find item from list by ID
-            boolean deletionConfirmed = View.confirmDeletion(); // Ask user for confirmation to delete item
-            if (deletionConfirmed) { // If user has confirmed (true), use the items method to submit the deletion
-                foundItem.submitDeleteItem();
-            }
-            StoreController.start(); // reset application.
-        } catch (IOException error) {
-            View.tryInputAgain("Item with that ID does not exist: ", ItemController::deleteItem);
-        }
+    @FXML
+    private TextField itemAmountField;
+    @FXML
+    public void updateNewItemAmount() throws IOException {
+        String newItemAmount = itemAmountField.getText();
+        newItem.setQtyInStock(Double.parseDouble(newItemAmount));
     }
 
-    /**
-     * Finds item from the Array and returns the Item or an IOException if corresponding item is found
-     * @param items Item[]
-     * @param selectedID int
-     * @return Item
-     * @throws IOException Selected item does not exist
-     */
-    private static Item findItemByID(ArrayList<Item> items, int selectedID) throws IOException {
-        for (Item item : items) {
-            if (item.getId() == selectedID) {
-                return item;
-            }
+    @FXML
+    private TextField itemPriceField;
+    @FXML
+    public void updateNewItemPrice() throws IOException {
+        String newItemPrice = itemPriceField.getText();
+        newItem.setUnitPrice(Double.parseDouble(newItemPrice));
+    }
+
+    @FXML
+    public void submitNewItem() throws IOException {
+        newItem.submitNewItem();
+        navigateHome();
+    }
+
+    /* BELOW CODE IS FOR EDITING ITEM QUANTITY */
+    @FXML
+    public TableView<Item> itemTable;
+
+    public void initialize() {
+        // Set TableView to be editable, this will allow the user to edit the field directly later.
+        if (itemTable != null) {
+            itemTable.setEditable(Boolean.TRUE);
+
+            // Retrieve all Items from the database and store them in an ArrayList variable.
+    //        ArrayList<Item> itemList = ItemManagerDB.getAllItems();
+            ArrayList<Item> itemList = ItemStorage.readItems();
+            /* Convert it to an ObservableList that can be used by the TableView, This allows for changes to Objects in the
+            list to be reflected in the table view */
+            ObservableList<Item> observableItems = FXCollections.observableArrayList(itemList);
+
+            /* Generate the ID Column and set the cell factory to be of a type Integer and map it to the id element in an
+             Item object */
+            TableColumn<Item, Integer> idColumn = new TableColumn<>("ID");
+            idColumn.setCellValueFactory(new PropertyValueFactory<Item, Integer>("id"));
+
+            /* Generate the Description column and set the cell factory to be of a type String and map it to the description
+            element in an Item Object */
+            TableColumn<Item, String> nameColumn = new TableColumn<>("Name");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+
+            /* Generate the Unit Price column and set the cell factory to be of a type Double and map it to the unitPrice
+            element in an Item Object */
+            TableColumn<Item, Double> unitPriceColumn = new TableColumn<>("Unit Price");
+            unitPriceColumn.setCellValueFactory(new PropertyValueFactory<Item, Double>("unitPrice"));
+
+            /* Generate the Quantity column and set the cell factory to be of a type Double and map it to the qtyInStock
+            element in an Item Object */
+            TableColumn<Item, Double> unitQuantityColumn = new TableColumn<>("Quantity (Double click to Edit)");
+            unitQuantityColumn.setCellValueFactory(new PropertyValueFactory<Item, Double>("qtyInStock"));
+            /* Setting on edit commit allows us to handle the changes made to this cell (When the user presses enter) this
+            logic will occur via a lambda function, the argument being the targetCell that was edited */
+            unitQuantityColumn.setOnEditCommit(
+                    targetCell -> {
+                        double oldValue = targetCell.getOldValue(); // Save original value to a variable.
+
+                        /* Get the Item Object from the targetCell and assign to a variable, then update the quantity with
+                        the new value */
+                        Item newItem = targetCell.getTableView().getItems().get(targetCell.getTablePosition().getRow());
+                        newItem.setQtyInStock(targetCell.getNewValue());
+
+                        // Update item in database
+    //                    ItemManagerDB.updatedItemQuantity(newItem, oldValue);
+                        newItem.submitUpdatedItem();
+                    }
+            );
+
+            // Update the cell factory to enable editing the text value inside it.
+            unitQuantityColumn.setCellFactory(column -> {
+                // Converts the Double value too and from a String value that the user can edit.
+                TextFieldTableCell<Item, Double> cell = new TextFieldTableCell<>(new StringConverter<>() {
+                    @Override
+                    public String toString(Double object) {
+                        return object != null ? object.toString() : ""; // Convert Double to String for display
+                    }
+
+                    @Override
+                    public Double fromString(String string) {
+                        try {
+                            return Double.parseDouble(string);  // Convert String input back to Double
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                    }
+                });
+
+                /* Add a listener to the cell to monitor changes in its item property, if the row of this column is empty
+                then the user shouldn't be able to edit the value as there is no Object in this row to update. */
+                cell.itemProperty().addListener((observable, oldValue, newValue) -> {
+                    if (cell.getTableRow() == null || cell.getTableRow().getItem() == null) {
+                        cell.setEditable(false);  // If no valid row or item, make cell non-editable
+                    } else {
+                        cell.setEditable(true);
+                        if (newValue != null) {
+                            cell.setText(newValue.toString());
+                        }
+                    }
+                });
+                return cell;
+            });
+
+            /* Generate the Total Value column and set the cell factory to be of a type Double and map it to the totalValue
+            element in an Item Object */
+            TableColumn<Item, Double> totalValueColumn = new TableColumn<>("Total Value");
+            totalValueColumn.setCellValueFactory(new PropertyValueFactory<Item, Double>("totalValue"));
+
+            // Generates a column at the end with a delete button inside of it.
+            TableColumn<Item, Item> deleteItemColumn = new TableColumn<>(""); // No header text for this column needed.
+            deleteItemColumn.setCellValueFactory(
+                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
+            );
+            deleteItemColumn.setCellFactory(param -> new TableCell<>() {
+                private final Button deleteButton = new Button("Delete Item"); // Generate the delete button
+
+                // On delete update the cell to empty itself as the Object for this row will no longer exist.
+                @Override
+                protected void updateItem(Item item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    // If not item on this row, no button should be displayed.
+                    if (item == null) {
+                        setGraphic(null);
+                        return;
+                    }
+                    // Else we set the graphic to display a button, on press it removes it from the table view and the DB.
+                    setGraphic(deleteButton);
+                    deleteButton.setOnAction(event -> {
+                        getTableView().getItems().remove(item);
+    //                    ItemManagerDB.deleteItem(item);
+                        item.submitDeleteItem();
+                    });
+                }
+            });
+
+            // Add items to the table view
+            itemTable.setItems(observableItems);
+            // Format the items into the columns and add them to the TableView
+            itemTable.getColumns().addAll(Arrays.asList(idColumn, nameColumn, unitPriceColumn, unitQuantityColumn, totalValueColumn, deleteItemColumn));
+            // Evenly spread and space columns to fit the screen size
+            itemTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         }
-        System.out.println("\nItem not found. Please try again");
-        throw new IOException("Selected item does not exist");
     }
 }

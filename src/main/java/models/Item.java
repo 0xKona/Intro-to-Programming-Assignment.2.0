@@ -27,7 +27,7 @@ import storage.ItemStorage;
  * <li>{@link #submitDeleteItem()}</li>
  */
 public class Item {
-    private int id;
+    private String id;
     private String name;
 
     // Initialize these variables as doubles as the price can include a decimal.
@@ -42,15 +42,15 @@ public class Item {
      * Returns the Item objects ID
      * @return int ID
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * Manually update the Item objects ID
-     * @param id int
+     * @param id String
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -150,7 +150,7 @@ public class Item {
      */
     public void submitNewItem() {
         Item thisItem = this;
-        ItemStorage.writeNewItemToStorage(thisItem);
+        ItemStorage.addNewItem(thisItem);
         Transaction transaction = new Transaction();
         transaction.generate(thisItem, TransactionType.ADDED);
     }

@@ -2,7 +2,10 @@ package models;
 
 import storage.TransactionStorage;
 import utils.IDGenerator;
+import utils.TableType;
 import utils.TimestampGenerator;
+
+import java.sql.SQLException;
 
 /**
  * Represents a transaction that records changes to the quantity and value of an item in stock.
@@ -25,7 +28,7 @@ import utils.TimestampGenerator;
  * <li>{@link #generate(Item, TransactionType)}</li>
  */
 public class Transaction extends Item {
-    private int id;
+    private String id;
     private String description;
     private double quantityChange;
     private double valueChange;
@@ -37,16 +40,16 @@ public class Transaction extends Item {
      * Gets the transaction objects ID and returns it.
      * @return int;
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * Sets the Transactions ID, should only be used when reading data from storage and creating objects, Manually
      * updating a TransactionID is NOT recommended.
-     * @param id int
+     * @param id String
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -152,9 +155,13 @@ public class Transaction extends Item {
      * @param transactionType {@link TransactionType} object
      */
     public void generate(Item item, TransactionType transactionType) {
-        this.id = IDGenerator.generateNewID();
+        try {
+            this.id = IDGenerator.generateNewID(TableType.Transactions);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
         this.description = String.format("%s has been %s", item.getName(), transactionType.toString());
-        this.quantityChange = item.getQtyInStock() - item.getPreviousQuantityInStock();
+        this.quantityChange = transactionType == TransactionType.ADDED ? item.getQtyInStock() : item.getQtyInStock() - item.getPreviousQuantityInStock();
         this.valueChange = item.getTotalValue() - item.getPreviousTotalValue();
         this.quantityRemaining = item.getQtyInStock();
         this.transactionType = transactionType.toString();
