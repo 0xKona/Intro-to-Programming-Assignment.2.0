@@ -15,6 +15,14 @@ public class Store extends Application {
         launch(args);
     }
 
+    /**
+     * Called by main to starts the JavaFX application, initializing the database and setting the initial scene
+     * @param stage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception exception if fails to load scene or initialize database.
+     */
     @Override
     public void start(Stage stage) throws Exception {
         DatabaseManager.initializeDatabase();
