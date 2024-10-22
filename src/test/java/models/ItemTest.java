@@ -113,7 +113,7 @@ public class ItemTest {
     }
 
     @Test
-    @DisplayName("Submit delete item shouldl submit to ItemStorage and generate transaction")
+    @DisplayName("Submit delete item should submit to ItemStorage and generate transaction")
     void testSubmitDeleteItem() {
         testItem.submitDeleteItem();
         mockedItemStorage.verify(() -> ItemStorage.deleteItem(testItem), times(1));

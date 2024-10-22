@@ -78,4 +78,5 @@ public class IDGeneratorTest {
         String actual = IDGenerator.formatID(10000);
         assertEquals(expected, actual);
     }
+
 }
