@@ -1,15 +1,16 @@
 # Intro to Programming Assignment - PART TWO
 
 # Overview:
+
 - This is a Java based program to manage inventory, it includes the capability to add items, update their quantity and delete them, for each action a transaction is generated, recording the action permanently.
-- The code in this branch is for Part One of the assignment, it comprises a CLI user interface and a text file
-  based storage system acting as a basic "database".
+- The code in this branch is for Part Two of the assignment, it comprises a GUI interface using JavaFX and a H2 SQL based database for storing Items and Transactions.
 - The project uses [Gradle](https://gradle.org/) as it's dependency manager and build tool.
 - Some common commands for this project are:
-- ```./gradle clean build``` - This cleans out the existing builds and builds the project into a .jar file. But needs a local installation of the JavaFX Runtime installed to run
+- ```./gradle clean``` - This cleans out the build file, useful when builds are failing unexpectedly.
 - ```./gradle test``` - Runs the JUnit tests for the project (These are also run during builds).
 - ```./gradle jlink``` - Builds the file into a runnable program located in `build/image` (executable in `build/image/bin`).
 - ```./gradle jpackageImage``` - [Recommended]: Builds the file into executable within a folder, (MacOS: .app, Windows: .exe). Located in `build/jpackage`
+- ```./gradle clean build``` - This cleans out the existing builds and builds the project into a .jar file. But needs a local installation of the JavaFX Runtime installed to run
 
 # Getting Started (IntelliJ):
 
@@ -38,7 +39,7 @@
 ## Running the example build
 
 - Included is an executable build of the GUI application
-- 1.) Double Click! Open the `exampleBuild` and double-click on the InventoryManagementSystem.app (for macOS).
+- 1.) Open the `exampleBuild` folder and double-click on the InventoryManagementSystem.app (for macOS). or the .exe file (for Windows)
 
 ## Running an executable .jar file
 
@@ -49,10 +50,12 @@
 
 
 ## Documentation:
+
 - Each class and public method has a Java Doc comment explaining its function and any arguments required and return values.
 - If using IntelliJ (And most modern IDE's) this enables you to hover over a usage, and it will quickly give more information about the class / method.
 
 ## Testing:
+
 - Tests a written using [JUnit](https://junit.org/junit5/) and [Mockito](https://site.mockito.org/) for mocking.
 - Tests are run during the build process, the build process will not complete unless all tests pass ensuring that 'degradation' does not occur adn that any new changes or features do not break the functionality of the application, however in circumstances the tests may need to be updated if the codebase changes drastically.
 - You can run the tests by opening a terminal at the root of the project and running:
@@ -62,6 +65,6 @@
 
 ## UML Design:
 
-To create the UML Designs I've used IntelliJ's built-in diagram tool and [PlantUML](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003)
+To create the UML Designs I've used IntelliJ's built-in diagram tool and [PlantUML](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003). By using IntelliJ's built-in tools it is easy to keep these up to date as the project has changed.
 
 ![UML Diagram](UML-Diagrams/UML-Diagram.png)
