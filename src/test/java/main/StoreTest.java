@@ -1,46 +1,28 @@
-//package main;
-//
-//import controller.StoreController;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.MockedStatic;
-//import org.mockito.Mockito;
-//import storage.FileManager;
-//
-//import java.io.FileNotFoundException;
-//
-//public class StoreTest {
-//
-//    // Define the global static mocks
-//    private MockedStatic<FileManager> mockedFileManager;
-//    private MockedStatic<StoreController> mockedStoreController;
-//
-//    @BeforeEach
-//    public void setUp() {
-//        // Initialize static mocks for FileManager and StoreController
-//        mockedFileManager = Mockito.mockStatic(FileManager.class);
-//        mockedStoreController = Mockito.mockStatic(StoreController.class);
-//    }
-//
-//    @AfterEach
-//    public void tearDown() {
-//        // Close static mocks to avoid interference
-//        mockedFileManager.close();
-//        mockedStoreController.close();
-//    }
-//
-//    @Test
-//    @DisplayName("Main should call FileManager and StoreController correctly")
-//    void testFileManager() throws FileNotFoundException {
-//        // Act: Call the main method of the Store class
-//        Store.main(new String[]{});
-//
-//        // Verify that FileManager.initializeStorage() was called once
-//        mockedFileManager.verify(FileManager::initializeStorage, Mockito.times(1));
-//
-//        // Verify that StoreController.start() was called once
-//        mockedStoreController.verify(StoreController::start, Mockito.times(1));
-//    }
-//}
+package main;
+
+import javafx.stage.Stage;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import storage.DatabaseManager;
+
+import static org.mockito.ArgumentMatchers.any;
+
+public class StoreTest {
+
+    @Test
+    @DisplayName("Main should call start and initialize application")
+    void testStart() throws Exception {
+        MockedStatic<DatabaseManager> mockedDatabaseManager = Mockito.mockStatic(DatabaseManager.class);
+        MockedStatic<View> mockedView = Mockito.mockStatic(View.class);
+
+        Store store = new Store();
+        Stage mockStage = Mockito.mock(Stage.class);
+
+        store.start(mockStage);
+
+        mockedView.verify(() -> View.initializeView(any(Stage.class)), Mockito.times(1));
+        mockedDatabaseManager.verify(DatabaseManager::initializeDatabase, Mockito.times(1));
+    }
+}
