@@ -1,14 +1,10 @@
 package utils;
 
 import storage.DatabaseManager;
-//import storage.FileManager;
-
-import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -46,7 +42,7 @@ public class IDGenerator {
      * @param table String ("Items" || "Transactions")
      * @return boolean (True if ID is already in use)
      */
-    private static boolean checkIfIDExists(int id, String table) {
+    static boolean checkIfIDExists(int id, String table) {
         // SQL Query string, selects every item that matches the ID.
         String sqlQuery = "SELECT * FROM " + table +" WHERE id = " + id;
         try {
