@@ -55,11 +55,10 @@ public class IDGeneratorTest {
                 boolean idInUse = inUseID.contains(formatToCheck);
                 return idInUse;
             });
+            String testID = IDGenerator.generateNewID(TableType.Transactions);
+            boolean result = inUseID.contains(testID);
+            assertFalse(result);
         }
-
-        String testID = IDGenerator.generateNewID(TableType.Transactions);
-        boolean result = inUseID.contains(testID);
-        assertFalse(result);
     }
 
 

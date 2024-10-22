@@ -12,7 +12,6 @@ import java.sql.SQLException;
  * <p>Uses getters and setters to alter fields</p>
  * <p>Methods:</p>
  * <li>{@link #getId()}</li>
- * <li>{@link #setId(int)}</li>
  * <li>{@link #getDescription()}</li>
  * <li>{@link #setDescription(String)}</li>
  * <li>{@link #getQuantityChange()}</li>
@@ -27,7 +26,7 @@ import java.sql.SQLException;
  * <li>{@link #setTimestamp(String)}</li>
  * <li>{@link #generate(Item, TransactionType)}</li>
  */
-public class Transaction extends Item {
+public class Transaction {
     private String id;
     private String description;
     private double quantityChange;

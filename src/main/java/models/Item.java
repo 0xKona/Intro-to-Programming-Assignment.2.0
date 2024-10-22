@@ -12,7 +12,6 @@ import storage.ItemStorage;
  *
  * <p>Methods:</p>
  * <li>{@link #getId()}</li>
- * <li>{@link #setId(int)}</li>
  * <li>{@link #getName()}</li>
  * <li>{@link #setName(String)}</li>
  * <li>{@link #getUnitPrice()}</li>

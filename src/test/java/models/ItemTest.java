@@ -5,6 +5,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import storage.ItemStorage;
 import storage.TransactionStorage;
+import utils.IDGenerator;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -14,6 +15,7 @@ public class ItemTest {
     Item testItem;
     MockedStatic<TransactionStorage> mockedTransactionStorage;
     MockedStatic<ItemStorage> mockedItemStorage;
+    MockedStatic<IDGenerator> mockedIDGenerator;
 
 
     @BeforeEach
@@ -21,12 +23,14 @@ public class ItemTest {
         testItem = new Item();
         mockedTransactionStorage = Mockito.mockStatic(TransactionStorage.class);
         mockedItemStorage = Mockito.mockStatic(ItemStorage.class);
+        mockedIDGenerator = Mockito.mockStatic(IDGenerator.class);
     }
 
     @AfterEach
     void tearDown() {
         mockedTransactionStorage.close();
         mockedItemStorage.close();
+        mockedIDGenerator.close();
     }
 
     @Test
@@ -99,7 +103,6 @@ public class ItemTest {
     @DisplayName("Submit new item should submit and call generate transaction")
     void testSubmitNewItem() {
         testItem.submitNewItem();
-
         mockedItemStorage.verify(() -> ItemStorage.addNewItem(testItem), times(1));
         mockedTransactionStorage.verify(() -> TransactionStorage.writeNewTransaction(any(Transaction.class)), times(1));
     }
