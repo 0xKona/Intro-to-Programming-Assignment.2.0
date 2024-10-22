@@ -17,7 +17,6 @@ public class ItemTest {
     MockedStatic<ItemStorage> mockedItemStorage;
     MockedStatic<IDGenerator> mockedIDGenerator;
 
-
     @BeforeEach
     void setUp() {
         testItem = new Item();

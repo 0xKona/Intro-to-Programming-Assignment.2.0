@@ -29,14 +29,13 @@ public class IDGeneratorTest {
             when(IDGenerator.checkIfIDExists(anyInt(), anyString())).thenAnswer(invocation -> {
                int checkingThisInt = invocation.getArgument(0);
                String formatToCheck = IDGenerator.formatID(checkingThisInt);
-               boolean idInUse = inUseID.contains(formatToCheck);
-               return idInUse;
+                return inUseID.contains(formatToCheck);
             });
+            String testID = IDGenerator.generateNewID(TableType.Items);
+            boolean result = inUseID.contains(testID);
+            assertFalse(result);
         }
 
-        String testID = IDGenerator.generateNewID(TableType.Items);
-        boolean result = inUseID.contains(testID);
-        assertFalse(result);
     }
 
     @Test
@@ -52,8 +51,7 @@ public class IDGeneratorTest {
             when(IDGenerator.checkIfIDExists(anyInt(), anyString())).thenAnswer(invocation -> {
                 int checkingThisInt = invocation.getArgument(0);
                 String formatToCheck = IDGenerator.formatID(checkingThisInt);
-                boolean idInUse = inUseID.contains(formatToCheck);
-                return idInUse;
+                return inUseID.contains(formatToCheck);
             });
             String testID = IDGenerator.generateNewID(TableType.Transactions);
             boolean result = inUseID.contains(testID);
