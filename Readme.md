@@ -6,8 +6,10 @@
   based storage system acting as a basic "database".
 - The project uses [Gradle](https://gradle.org/) as it's dependency manager and build tool.
 - Some common commands for this project are:
-- ```./gradle clean build``` - This cleans out the existing builds and builds the project into a .jar file.
+- ```./gradle clean build``` - This cleans out the existing builds and builds the project into a .jar file. But needs a local installation of the JavaFX Runtime installed to run
 - ```./gradle test``` - Runs the JUnit tests for the project (These are also run during builds).
+- ```./gradle jlink``` - Builds the file into a runnable program located in `build/image` (executable in `build/image/bin`).
+- ```./gradle jpackageImage``` - [Recommended]: Builds the file into executable within a folder, (MacOS: .app, Windows: .exe). Located in `build/jpackage`
 
 # Getting Started (IntelliJ):
 
@@ -52,7 +54,7 @@
 
 ## Testing:
 - Tests a written using [JUnit](https://junit.org/junit5/) and [Mockito](https://site.mockito.org/) for mocking.
-- Tests are run during the build process, the build process will not complete unless all tests pass ensuring that 'degredation' does not occur adn that any new changes or features do not break the functionality of the application, however in circumstances the tests may need to be updated if the codebase changes drastically.
+- Tests are run during the build process, the build process will not complete unless all tests pass ensuring that 'degradation' does not occur adn that any new changes or features do not break the functionality of the application, however in circumstances the tests may need to be updated if the codebase changes drastically.
 - You can run the tests by opening a terminal at the root of the project and running:
 - ```./gradlew test```
 - After running a test the project uses [Jacoco](https://github.com/jacoco/jacoco) To generate a code coverage report which tells you how much of your code is tested.
@@ -60,6 +62,6 @@
 
 ## UML Design:
 
-To create the UML Designs i've used IntelliJ's built-in diagram tool and [PlantUML](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003)
+To create the UML Designs I've used IntelliJ's built-in diagram tool and [PlantUML](https://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa700003)
 
 ![UML Diagram](UML-Diagrams/UML-Diagram.png)
