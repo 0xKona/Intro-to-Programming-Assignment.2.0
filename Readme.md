@@ -42,7 +42,7 @@
 
 - 1.) Open the `exampleBuild` folder and open the windows or macOS folder
 - 2.) MacOS: Open the `InventoryManagementSystem.app` to run it or use the `.dmg` or `.pkg` files to install it on teh system
-- 3.) Windows: ***UPDATE WHEN GENERATED BUILDS***
+- 3.) Windows: Open the `InventoryManagementSystem.exe` file to run the app.
 
 ## Running an executable .jar file
 
