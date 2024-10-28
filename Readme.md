@@ -3,13 +3,13 @@
 # Overview:
 
 - This is a Java based program to manage inventory, it includes the capability to add items, update their quantity and delete them, for each action a transaction is generated, recording the action permanently.
-- The code in this branch is for Part Two of the assignment, it comprises a GUI interface using JavaFX and a H2 SQL based database for storing Items and Transactions.
+- The code in this branch is for Part Two of the assignment, it comprises a GUI interface using JavaFX and an H2 SQL based database for storing Items and Transactions.
 - The project uses [Gradle](https://gradle.org/) as it's dependency manager and build tool.
 - Some common commands for this project are:
 - ```./gradle clean``` - This cleans out the build file, useful when builds are failing unexpectedly.
 - ```./gradle test``` - Runs the JUnit tests for the project (These are also run during builds).
 - ```./gradle jlink``` - Builds the file into a runnable program located in `build/image` (executable in `build/image/bin`).
-- ```./gradle jpackageImage``` - [Recommended]: Builds the file into executable within a folder, (MacOS: .app, Windows: .exe). Located in `build/jpackage`
+- ```./gradle jpackageImage``` - [Recommended]: Builds the file into executable within a folder, (macOS: .app, Windows: .exe). Located in `build/jpackage`
 - ```./gradle clean build``` - This cleans out the existing builds and builds the project into a .jar file. But needs a local installation of the JavaFX Runtime installed to run
 
 # Getting Started (IntelliJ):
