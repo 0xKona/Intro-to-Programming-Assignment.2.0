@@ -38,8 +38,11 @@
 
 ## Running the example build
 
-- Included is an executable build of the GUI application
-- 1.) Open the `exampleBuild` folder and double-click on the InventoryManagementSystem.app (for macOS). or the .exe file (for Windows)
+- There is a folder called exampleBuild within this project containing portable builds and installers for macOS and Windows
+
+- 1.) Open the `exampleBuild` folder and open the windows or macOS folder
+- 2.) MacOS: Open the `InventoryManagementSystem.app` to run it or use the `.dmg` or `.pkg` files to install it on teh system
+- 3.) Windows: ***UPDATE WHEN GENERATED BUILDS***
 
 ## Running an executable .jar file
 
