@@ -1,6 +1,8 @@
 package storage;
 
 import models.Item;
+import utils.IDGenerator;
+import utils.TableType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,11 +28,11 @@ public class ItemStorage {
         // The SQL statement provided to the database, ? is an argument I can insert into it later
         String sqlStatement = "INSERT INTO Items (id, name, unitPrice, qtyInStock, totalPrice) VALUES (?, ?, ?, ?, ?)";
         try {
-            int newID = DatabaseManager.generateUniqueID("Items"); // Generate a new ID
+            String newID = IDGenerator.generateNewID(TableType.Items); // Generate a new ID
             Connection connection = DatabaseManager.connect(); // Connect the database
             PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement); // Prepare statement
             // Set arguments on my statement
-            preparedStatement.setInt(1, newID);
+            preparedStatement.setString(1, newID);
             preparedStatement.setString(2, item.getName());
             preparedStatement.setDouble(3, item.getUnitPrice());
             preparedStatement.setDouble(4, item.getQtyInStock());
@@ -98,7 +100,7 @@ public class ItemStorage {
             // Iterate over result set and create item objects from entries
             while (resultSet.next()) {
                 Item item = new Item(); // Initialize new Item object
-                item.setId(DatabaseManager.formatID(resultSet.getInt("id")));
+                item.setId(IDGenerator.formatID(resultSet.getInt("id")));
                 item.setName(resultSet.getString("name"));
                 item.setUnitPrice(resultSet.getDouble("unitPrice"));
                 item.setQtyInStock(resultSet.getDouble("qtyInStock"));

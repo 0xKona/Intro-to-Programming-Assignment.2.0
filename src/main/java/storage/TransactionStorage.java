@@ -2,7 +2,8 @@ package storage;
 
 import models.Transaction;
 import models.TransactionType;
-import utils.TimestampGenerator;
+import utils.IDGenerator;
+import utils.TableType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * <p>Public Methods:</p>
  * <ul>
  *   <li>{@link #writeNewTransaction(Transaction)}</li>
- *   <li>{@link #readTransactions()}</li>
+ *   <li>{@link #readTransactions(String, String)}</li>
  * </ul>
  */
 public class TransactionStorage {
@@ -29,11 +30,11 @@ public class TransactionStorage {
         // SQL Statement; '?' is an argument that can be passed in later
         String sqlStatement = "INSERT INTO Transactions (id, description, quantityChange, quantityRemaining, valueChange, transactionType, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            int newID = DatabaseManager.generateUniqueID("Transactions"); // Generate a unique ID for the relevant table.
+            String newID = IDGenerator.generateNewID(TableType.Transactions); // Generate a unique ID for the relevant table.
             Connection connection = DatabaseManager.connect(); // Connect to Database
             PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement); // Initialize the statement
             // Pass arguments to SQL statement.
-            preparedStatement.setInt(1, newID);
+            preparedStatement.setString(1, newID);
             preparedStatement.setString(2, transaction.getDescription());
             preparedStatement.setDouble(3, transaction.getQuantityChange());
             preparedStatement.setDouble(4, transaction.getQuantityRemaining());
@@ -67,7 +68,7 @@ public class TransactionStorage {
 
             while (resultSet.next()) { // Loop through resultSet and create Transaction Objects and add them to ArrayList
                 Transaction transaction = new Transaction();
-                transaction.setId(DatabaseManager.formatID(resultSet.getInt("id")));
+                transaction.setId(IDGenerator.formatID(resultSet.getInt("id")));
                 transaction.setDescription(resultSet.getString("description"));
                 transaction.setQuantityChange(resultSet.getInt("quantityChange"));
                 transaction.setQuantityRemaining(resultSet.getInt("quantityRemaining"));
