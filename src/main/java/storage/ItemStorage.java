@@ -43,9 +43,7 @@ public class ItemStorage {
         is empty we return immediately, if not we perform the formatting into an Item object
          */
         lines.forEach(line -> {
-            if (line.isEmpty()) {
-                return;
-            } else {
+            if (!line.isEmpty()) {
                 String[] splitLine = line.split(",");
                 Item item = new Item();
                 item.setId(Integer.parseInt(splitLine[0]));
