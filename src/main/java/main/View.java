@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * View handles displaying the CLI user interface
@@ -15,12 +16,17 @@ public class View {
 
     public static Stage currentStage;
 
+    private static void loadCss(Scene scene) {
+        scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("/styles/global.css")).toExternalForm());
+    }
+
     public static void initializeView(Stage stage) throws IOException {
         currentStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/main-menu.fxml"));
         Scene mainScene = new Scene(fxmlLoader.load(), 1280,720);
         currentStage.setScene(mainScene);
         currentStage.setTitle("Inventory Management System");
+        loadCss(mainScene);
         currentStage.show();
     }
 
@@ -32,6 +38,7 @@ public class View {
         System.out.println("Navigating to transaction report");
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/transactions-view.fxml"));
         Scene dashboardScene = new Scene(fxmlLoader.load(), 1280, 720);
+        loadCss(dashboardScene);
         currentStage.setScene(dashboardScene);
     }
 
@@ -43,6 +50,7 @@ public class View {
         System.out.println("Navigating to main menu");
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/main-menu.fxml"));
         Scene newScene = new Scene(fxmlLoader.load(), 1280, 720);
+        loadCss(newScene);
         currentStage.setScene(newScene);
     }
 
@@ -55,6 +63,7 @@ public class View {
         ItemController.initializeNewItem();
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/add-new-item-view.fxml"));
         Scene newScene = new Scene(fxmlLoader.load(), 1280, 720);
+        loadCss(newScene);
         currentStage.setScene(newScene);
     }
 
@@ -66,6 +75,7 @@ public class View {
         System.out.println("Navigating to view items");
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/edit-items-view.fxml"));
         Scene newScene = new Scene(fxmlLoader.load(), 1280, 720);
+        loadCss(newScene);
         currentStage.setScene(newScene);
     }
 }

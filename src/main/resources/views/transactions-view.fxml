@@ -29,7 +29,7 @@
    <top>
       <VBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="5.0" text="Transaction Report for Today" textAlignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="5.0" text="TRANSACTION REPORT FOR TODAY" textAlignment="CENTER" styleClass="header-text">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

@@ -10,12 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController">
-    <Text>Hello Add New item!</Text>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController" stylesheets="/styles/global.css">
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Item">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ADD NEW ITEM" styleClass="header-text">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -28,26 +27,27 @@
          <children>
             <Label alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Item Name" />
             <TextField fx:id="itemNameField" prefHeight="25.0" prefWidth="1077.0" onKeyReleased="#updateNewItemName"/>
+            <Label alignment="CENTER" fx:id="itemNameError" text="Name must be at least one character" layoutX="100" layoutY="80" visible="false" styleClass="error-text"/>
             <Label alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Amount of Items">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="1077.0" onKeyReleased="#updateNewItemAmount"/>
-            <Label fx:id="itemAmountError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
+            <Label fx:id="itemAmountError" text="Amount should be a number" layoutX="100" layoutY="80" visible="false" styleClass="error-text"/>
             <Label alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Item Price">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="itemPriceField" prefHeight="25.0" prefWidth="1077.0" onKeyReleased="#updateNewItemPrice" />
-            <Label fx:id="itemPriceError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
+            <Label fx:id="itemPriceError" text="Price should be a number" layoutX="100" layoutY="80" visible="false" styleClass="error-text"/>
             <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Submit New Item" onAction="#submitNewItem">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
-            <Label fx:id="submitError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
+            <Label alignment="CENTER" fx:id="submitError" text="One or more fields are invalid" layoutX="100" layoutY="80" visible="false" styleClass="error-text"/>
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

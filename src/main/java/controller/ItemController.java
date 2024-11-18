@@ -38,9 +38,15 @@ public class ItemController {
     // Update newitem name
     @FXML
     private TextField itemNameField;
+    @FXML Label itemNameError;
     @FXML
     public void updateNewItemName() throws IOException {
         String newItemName = itemNameField.getText();
+        if (newItemName.isEmpty()) {
+            itemNameError.setVisible(true);
+            return;
+        }
+        itemNameError.setVisible(false);
         newItem.setName(newItemName);
     }
 
@@ -54,17 +60,12 @@ public class ItemController {
             newItem.setQtyInStock(Double.parseDouble(newItemAmount));
             itemAmountError.setVisible(false);
         } else {
-            updateItemAmountError("Amount must be a number");
+            itemAmountError.setVisible(true);
         }
     }
 
     @FXML
     private Label itemAmountError;
-    @FXML
-    private void updateItemAmountError(String newError) {
-        itemAmountError.setText(newError);
-        itemAmountError.setVisible(true);
-    }
 
     @FXML
     private TextField itemPriceField;
@@ -77,17 +78,12 @@ public class ItemController {
             newItem.setUnitPrice(Double.parseDouble(newItemPrice));
             itemPriceError.setVisible(false);
         } else {
-            updateItemPriceError("Price must be a number");
+            itemPriceError.setVisible(true);
         }
     }
 
     @FXML
     private Label itemPriceError;
-    @FXML
-    private void updateItemPriceError(String newError) {
-        itemPriceError.setText(newError);
-        itemPriceError.setVisible(true);
-    }
 
     // Utility method to check if a string is a valid double
     private boolean isNumeric(String str) {
@@ -106,29 +102,23 @@ public class ItemController {
         System.out.println(newItem.getName());
         System.out.println(newItem.getUnitPrice());
         System.out.println(newItem.getQtyInStock());
-        if (
-                !itemNameField.getText().isEmpty() &&
-                !itemAmountField.getText().isEmpty() &&
-                !itemPriceField.getText().isEmpty() &&
-                !itemAmountError.isVisible() &&
-                !itemPriceError.isVisible()
-        ) {
+        if (itemNameField.getText().isEmpty()) {
+            itemNameError.setVisible(true);
+            submitError.setVisible(true);
+        } else if (itemAmountField.getText().isEmpty() || itemAmountError.isVisible()) {
+            itemAmountError.setVisible(true);
+            submitError.setVisible(true);
+        } else if (itemPriceField.getText().isEmpty() || itemPriceError.isVisible()) {
+            itemPriceError.setVisible(true);
+            submitError.setVisible(true);
+        } else {
             submitError.setVisible(false);
             newItem.submitNewItem();
             navigateHome();
-        } else {
-            updateSubmitError("One or more fields are invalid");
-            submitError.setVisible(true);
         }
     }
-
     @FXML
     private Label submitError;
-    @FXML
-    private void updateSubmitError(String newError) {
-        submitError.setText(newError);
-        submitError.setVisible(true);
-    }
 
     /* BELOW CODE IS FOR EDITING ITEM QUANTITY */
     @FXML
@@ -181,7 +171,7 @@ public class ItemController {
                         newItem.setQtyInStock(targetCell.getNewValue());
 
                         // Update item in database
-    //                    ItemManagerDB.updatedItemQuantity(newItem, oldValue);
+                        // ItemManagerDB.updatedItemQuantity(newItem, oldValue);
                         newItem.submitUpdatedItem();
                     }
             );
@@ -247,7 +237,6 @@ public class ItemController {
                     setGraphic(deleteButton);
                     deleteButton.setOnAction(event -> {
                         getTableView().getItems().remove(item);
-    //                    ItemManagerDB.deleteItem(item);
                         item.submitDeleteItem();
                     });
                 }

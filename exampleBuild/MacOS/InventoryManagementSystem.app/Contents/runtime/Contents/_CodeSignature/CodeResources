@@ -24,21 +24,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KszXnwtjsClGo0kEhv288mwjKfpFEjL/5bdOHaAGWTc=
+			2gyYNYnDuEzpp+mFAGTlrc/EcA1fc3liFWA7WFxss9I=
 			</data>
 		</dict>
 		<key>Home/bin/jrunscript</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jX88sqGo6iEXSI+WXZcakZx9QxDAKXnWJGAOu5FZ3D4=
+			vch7+Gy7o8dacgVodGhM1qi/5xzJ/6dIqrki3bi8nOs=
 			</data>
 		</dict>
 		<key>Home/bin/keytool</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7zpMNx14CJ9jzUeeSbm/JWiuWyUUAaEwyHWJ2Wze3BE=
+			elgiv5wo1IcLpusU9VodvhyCF4vbbS0i9Rz9vdl1RLA=
 			</data>
 		</dict>
 		<key>Home/conf/jaxp.properties</key>
@@ -202,6 +202,13 @@
 			b3LxDRZrLC6KOV4D5zTFr8hStZrspzztEk9rnJYmjVM=
 			</data>
 		</dict>
+		<key>Home/legal/java.base/zlib.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gJtiumSOAjAvfZ6mtohsENUlOshq1SgDilDHPq2l/OI=
+			</data>
+		</dict>
 		<key>Home/legal/java.compiler/ADDITIONAL_LICENSE_INFO</key>
 		<dict>
 			<key>hash2</key>
@@ -270,6 +277,48 @@
 			<key>hash2</key>
 			<data>
 			BNYePo5x3UUuvlIAivU3jZ9mQNFFeK61FdxTdZc7AYk=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/freetype.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			6kvsVw7TXrFjr/lCD3zgj2+TeMEVvc94Zdwc0dTU6kg=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/giflib.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			yLmfM4kIh9J61W+6nt2Ou8Zoz+BokWhQWpVhPR1LMvg=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/harfbuzz.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ch18WiS9DApZ/l7h/eHBdUGnRcA444g9SxhKIXefTkg=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/jpeg.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wd+5cZpxrZ+GH4coVQVC1oHiXI70DmOTYG5uKgwdZTo=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/lcms.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			6fXzdMtBFqy9guw5sKH5OrH1rf2MIISIuo+X3mXoZEY=
+			</data>
+		</dict>
+		<key>Home/legal/java.desktop/libpng.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AaCflpxCDgdWaAqlW+r8E9PHcrB5SuxtE0jI4DVDmTQ=
 			</data>
 		</dict>
 		<key>Home/legal/java.desktop/mesa3d.md</key>
@@ -584,14 +633,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uxybo/mJ+02uTLiNwAE5skbIBhyth2zoiMJ2q1GwEY4=
+			ghzcXKKZWxB38bvxuUMIiRD2FaHd7OJNPuno0jYdqMs=
 			</data>
 		</dict>
 		<key>Home/lib/jspawnhelper</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3LZXrju3YKWGlSfG8T3ry1JY+yTTDVI3Ii/s0vzlgF0=
+			ECQMyivMVWGsmXOFJltsHMDTPHTlBtJ810320EC4eAE=
 			</data>
 		</dict>
 		<key>Home/lib/jvm.cfg</key>
@@ -605,182 +654,189 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BPMaH4cy4SACay+WA7vgFXAzh0XE9rvofUva64hkWYo=
+			i2gfLUn/VJ+unVUp9toaBsGJ3nVFtLOxpZ+79D3mxNQ=
 			</data>
 		</dict>
 		<key>Home/lib/libawt_lwawt.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			roOQh8fGaM6ZFswiNhJ523L3h9Gofct/Lw8Gb1QSgUM=
+			DyxDpFQKviBpFUuToyO7VXvVYqbOBB3oo6+c7SZ63mM=
 			</data>
 		</dict>
 		<key>Home/lib/libfontmanager.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			j9sHdojGPMuNzIBNNno5kIAQN038fvVxr6Vu4tpSt6o=
+			KAdaUe4nk6vTWkA3idry9r+pRCmBqFsMVRVLkk1OpAw=
+			</data>
+		</dict>
+		<key>Home/lib/libfreetype.dylib</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wefvg/g2YQ/yqsUDypNPrFiHpeSg80QPdXQfT/+62Xc=
 			</data>
 		</dict>
 		<key>Home/lib/libinstrument.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bRZnMv2ipzNasLVAFu37iZa+HroM8AZZezhu6p3LkkQ=
+			jLqbaWeZf+NrY8mHvBWgFPaOoZNFEGdLgF14sukvEuE=
 			</data>
 		</dict>
 		<key>Home/lib/libjava.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0O75smEhRVWWzHbVr5nGZhCp4XXGK+jA+zjj911riD4=
+			BKQ8C/u9yqZx1MbbEesMNNW6weS/PbC21jAAirXEBjE=
 			</data>
 		</dict>
 		<key>Home/lib/libjavajpeg.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QVfScan+oE2LQRkDqzloAqFOVSWGE6dmgJl+KRLDk84=
+			QH6VVm/gVZGANqumqucpnmrHjcj+Mxk0vSkS5Qnk0LU=
 			</data>
 		</dict>
 		<key>Home/lib/libjawt.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WZf9P4ohpaLndOq8ROTveTcPeWiljPVIbHzyWmd8z9c=
+			tQ5EUAlhauIvosz3ErdP6II2OeD3xd9uyqVcsiSG4ek=
 			</data>
 		</dict>
 		<key>Home/lib/libjimage.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BFRAOVkxiUKKfXf7vhwwC214qJRvMvriiVuim/bh34g=
+			Rxg/6SCMuDbPsQ1GrWX5KihMOpIitkFcmBL5uD/ilUU=
 			</data>
 		</dict>
 		<key>Home/lib/libjli.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Nf+YtULeM73AbnhXWsSltxeIWYOLxJchox5eiUg2yV4=
+			UeppGQvcTtXgpE1wVYi+IQ6SfmBrGTJ9ds1Dodil/Nc=
 			</data>
 		</dict>
 		<key>Home/lib/libjsig.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			D3OWcFX3JjyQxBqAz13XdE56Xj3QgVolOZh2wPvRo2A=
+			LJ7pnRAEqD7rhmY5nTVg7xlwXLjk+5tu+ntLBV1Aqoo=
 			</data>
 		</dict>
 		<key>Home/lib/libjsound.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R+V0rvdYV1u2XOyNa1fanK4hW+FpD1UtpoX2ix72Y+c=
+			GWKwp1i8fp7zSp4u3fvJ/hvw8gomow9hlzaXvnPtfpg=
 			</data>
 		</dict>
 		<key>Home/lib/liblcms.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yF2J6jz8BqPp6j9mSuW8zNSfHduSB1FEHp5DiQrYscw=
+			+pHSqnZfXwOkHJrrDKW8hd0i17pSBeb3sLqIGr+bz0A=
 			</data>
 		</dict>
 		<key>Home/lib/libmanagement.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jJUhMM2mbSMBYxHOj+xu3uyKty3WJsGCre/PEwHNR3U=
+			3zVSodQ/1uoYtPaFZf11HM7VBqB7lWvoM3lM7QyooEU=
 			</data>
 		</dict>
 		<key>Home/lib/libmlib_image.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PKbvtv+KYmA841fnEjUaOMPGIsfEzoysg2HULBfV6TY=
+			iCmMpDrVMh3SgOMQMvEFxq8ASiXZG/c1bgoitIwjSqg=
 			</data>
 		</dict>
 		<key>Home/lib/libnet.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c39STdm+QkfTrk71TgazgJ3/mGRzn0cH9Vu11V7MBzw=
+			QtdNObBVNYsTy6clzBsDvfFu0UxV0ys96+hv9BbvCQA=
 			</data>
 		</dict>
 		<key>Home/lib/libnio.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JmzO92L5+8CGMCpV3TIPtY7f8rPVhP0v9h4diupzZ4g=
+			lwbj1dnyRauYkaHzxtUvMGaqt1ocYwuB8d7esHb07VQ=
 			</data>
 		</dict>
 		<key>Home/lib/libosx.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uL93ABpRUMYRI3M19b9UOMIsvuXs2FDqrs8X2fgaUL8=
+			nk6Ajw2I3xIgEirC6rFu+2ESnoRzK9/rkQqdzOuyVvY=
 			</data>
 		</dict>
 		<key>Home/lib/libosxapp.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3+Yuh9UQL4v3QFulBdsUISa/Bs0pl2/G/EFE8uSvbZ4=
+			fH6EGELOv+x0DAcDZ5y7XUNTRwlfl/rANxMDPZZ496c=
 			</data>
 		</dict>
 		<key>Home/lib/libosxsecurity.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xyFZ2vKXIEjNK0er+SwrLL2+mlnhNoawT/6UhK3P1uw=
+			8p5VpE6KaSFhPHcYhgOq4ENoiI4NGNbjannEvL6/d7k=
 			</data>
 		</dict>
 		<key>Home/lib/libosxui.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			o1n6ayP8z4+1SRx4gUznoUv8jGtLyZKabtAARUFiPUg=
+			m8aVTSq5DlhM3BEXQMinvCTcYZIvrlB1Wva6eTKM0oY=
 			</data>
 		</dict>
 		<key>Home/lib/libprefs.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SAUz6Xz1kxwIEjnJgg/agLGw/OQXe66y4p94JhDT8tU=
+			dAtXeq9dDssF0d+EhRNrdQpSF9enjHgv57o1402EetI=
 			</data>
 		</dict>
 		<key>Home/lib/libsplashscreen.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3LVdE/F5jcVxh6tHcGSLpaP3j6s7nK9avKfE7yXkbvs=
+			wlEkBJP1dKbGUF3pUxW32yllOR3YVjeZ3vQctHfXWZY=
 			</data>
 		</dict>
 		<key>Home/lib/libsyslookup.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qGb8sS/8+1F2ufVzjeMzKwwS+fDYhyFotAMEqKAKwaM=
+			vMyEqqffHhzJm5DzuhjmdIkgOqyjVEt+8fMTcT451Dw=
 			</data>
 		</dict>
 		<key>Home/lib/libverify.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PQlIO8v+buuOWQFokgXpf7btGJOfeUzamFTE89jueCg=
+			j1cANFvXroNPEawRgOa54gjml5/CQAG51PmLvwQoBAA=
 			</data>
 		</dict>
 		<key>Home/lib/libzip.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vP0mOF7y+QLvYizacWRbtfGIe0I46wpRWp7IIgQ64+Y=
+			V/Y4oJSFp9ncVQ4FdEjNqGEcSRszn3BoDVRF5by92HI=
 			</data>
 		</dict>
 		<key>Home/lib/modules</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BE77RsY1N0isywB7jKwVCO+FUiGrK/sEvoWNh5GFbNk=
+			xnOmkgjLv9MkQM1pfUF5C4PrdyLYloCdH1gUJZ4wgDQ=
 			</data>
 		</dict>
 		<key>Home/lib/psfont.properties.ja</key>
@@ -808,7 +864,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vYBlgWjlbFFk7bkIU5+7L9lsXdQG1BZZORCO+CSBi3g=
+			N84mqdBsgsmYUfdaMURKO2igxpFPAJWAhXpb3Zk3G5A=
 			</data>
 		</dict>
 		<key>Home/lib/security/default.policy</key>
@@ -829,21 +885,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			D3OWcFX3JjyQxBqAz13XdE56Xj3QgVolOZh2wPvRo2A=
+			LJ7pnRAEqD7rhmY5nTVg7xlwXLjk+5tu+ntLBV1Aqoo=
 			</data>
 		</dict>
 		<key>Home/lib/server/libjvm.dylib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DSpfWzGYGlLmPhofoB5UgTWJYo8ZOrBXjW3Q6NY0Dkg=
+			7FiiA6pcZM5XuujxjGLFVbkK2oE2j+KuBCMl0KaH+hc=
 			</data>
 		</dict>
 		<key>Home/lib/shaders.metallib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BivMU/Ts08nKbQezPQKiZR9LbG+EIWiVIAkA9t8poZ4=
+			gr0pj41D0juh/hMv1MWs9hA6VMHu/UAw5SOfC2KH758=
 			</data>
 		</dict>
 		<key>Home/lib/tzdb.dat</key>
