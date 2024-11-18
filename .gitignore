@@ -42,3 +42,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Storage ###
+items.txt
+transactions.txt

@@ -34,17 +34,20 @@
                </VBox.margin>
             </Label>
             <TextField fx:id="itemAmountField" prefHeight="25.0" prefWidth="1077.0" onKeyReleased="#updateNewItemAmount"/>
+            <Label fx:id="itemAmountError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
             <Label alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" text="Item Price">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="itemPriceField" prefHeight="25.0" prefWidth="1077.0" onKeyReleased="#updateNewItemPrice" />
+            <Label fx:id="itemPriceError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
             <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Submit New Item" onAction="#submitNewItem">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
+            <Label fx:id="submitError" layoutX="100" layoutY="80" textFill="red" visible="false"/>
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

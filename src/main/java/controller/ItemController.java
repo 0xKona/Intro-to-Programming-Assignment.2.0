@@ -15,6 +15,7 @@ import storage.ItemStorage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 
 /**
  * Holds methods responsible for the logic of adding, updating and deleting items.
@@ -48,21 +49,85 @@ public class ItemController {
     @FXML
     public void updateNewItemAmount() throws IOException {
         String newItemAmount = itemAmountField.getText();
-        newItem.setQtyInStock(Double.parseDouble(newItemAmount));
+
+        if (isNumeric(newItemAmount)) {
+            newItem.setQtyInStock(Double.parseDouble(newItemAmount));
+            itemAmountError.setVisible(false);
+        } else {
+            updateItemAmountError("Amount must be a number");
+        }
+    }
+
+    @FXML
+    private Label itemAmountError;
+    @FXML
+    private void updateItemAmountError(String newError) {
+        itemAmountError.setText(newError);
+        itemAmountError.setVisible(true);
     }
 
     @FXML
     private TextField itemPriceField;
+
     @FXML
-    public void updateNewItemPrice() throws IOException {
+    public void updateNewItemPrice() throws InputMismatchException {
         String newItemPrice = itemPriceField.getText();
-        newItem.setUnitPrice(Double.parseDouble(newItemPrice));
+
+        if (isNumeric(newItemPrice)) { // Check if the input is a valid double number
+            newItem.setUnitPrice(Double.parseDouble(newItemPrice));
+            itemPriceError.setVisible(false);
+        } else {
+            updateItemPriceError("Price must be a number");
+        }
+    }
+
+    @FXML
+    private Label itemPriceError;
+    @FXML
+    private void updateItemPriceError(String newError) {
+        itemPriceError.setText(newError);
+        itemPriceError.setVisible(true);
+    }
+
+    // Utility method to check if a string is a valid double
+    private boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @FXML
     public void submitNewItem() throws IOException {
-        newItem.submitNewItem();
-        navigateHome();
+        // check object valid before submitting
+        System.out.println("***Submitting new item***");
+        System.out.println(newItem.getName());
+        System.out.println(newItem.getUnitPrice());
+        System.out.println(newItem.getQtyInStock());
+        if (
+                !itemNameField.getText().isEmpty() &&
+                !itemAmountField.getText().isEmpty() &&
+                !itemPriceField.getText().isEmpty() &&
+                !itemAmountError.isVisible() &&
+                !itemPriceError.isVisible()
+        ) {
+            submitError.setVisible(false);
+            newItem.submitNewItem();
+            navigateHome();
+        } else {
+            updateSubmitError("One or more fields are invalid");
+            submitError.setVisible(true);
+        }
+    }
+
+    @FXML
+    private Label submitError;
+    @FXML
+    private void updateSubmitError(String newError) {
+        submitError.setText(newError);
+        submitError.setVisible(true);
     }
 
     /* BELOW CODE IS FOR EDITING ITEM QUANTITY */
