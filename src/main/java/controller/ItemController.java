@@ -3,6 +3,7 @@ package controller;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,6 +13,7 @@ import main.View;
 import models.Item;
 import storage.ItemStorage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +37,7 @@ public class ItemController {
         newItem = new Item();
     }
 
-    // Update newitem name
+    // Update newItem name
     @FXML
     private TextField itemNameField;
     @FXML Label itemNameError;
@@ -120,22 +122,59 @@ public class ItemController {
     @FXML
     private Label submitError;
 
+    private String filterQuery;
+
     /* BELOW CODE IS FOR EDITING ITEM QUANTITY */
+    @FXML
+    public TextField filterItemsInput = new TextField();
+
+    @FXML
+    public void setFilterItemsInput() {
+        filterQuery = filterItemsInput.getText().toLowerCase();
+        initialize();
+    }
+
+    @FXML
+    public void filterItems() {
+        initialize();
+    }
+
+
     @FXML
     public TableView<Item> itemTable;
 
     public void initialize() {
+
         /* Conditionally initialize itemTable, this is necessary due to the fact that my two fxml views are using this
         same controller, which means that when add-item-view.fxml is loaded it tries to initialize the TableView used in
         edit-items-view which causes a null exception, to fix this I simply need to do a not null check here first however
-        a more robust solution would be to seperate this ItemController class into two seperate controllers for each fxml
+        a more robust solution would be to separate this ItemController class into two separate controllers for each fxml
         file. */
         if (itemTable != null) {
             // Set TableView to be editable, this will allow the user to edit the field directly later.
             itemTable.setEditable(Boolean.TRUE);
 
             // Retrieve all Items from the database and store them in an ArrayList variable.
-            ArrayList<Item> itemList = ItemStorage.readItems();
+            ArrayList<Item> storageList = ItemStorage.readItems();
+            ArrayList<Item> itemList = new ArrayList<Item>();
+            // Logic for filtering items based on user input
+            for (Item item : storageList) {
+                // If the filterQuery is null or an empty string set itemList to all items and break loop to save compute time
+                if (filterQuery == null || filterQuery.isEmpty()) {
+                    itemList = storageList;
+                    break;
+                }
+                String itemId = item.getId().toLowerCase();
+                String itemName = item.getName().toLowerCase();
+
+                boolean idMatch = itemId.contains(filterQuery);
+                boolean nameMatch = itemName.contains(filterQuery);
+
+                if (idMatch || nameMatch) {
+                    itemList.add(item);
+                }
+            }
+
             /* Convert it to an ObservableList that can be used by the TableView, This allows for changes to Objects in the
             list to be reflected in the table view */
             ObservableList<Item> observableItems = FXCollections.observableArrayList(itemList);
@@ -245,7 +284,7 @@ public class ItemController {
             // Add items to the table view
             itemTable.setItems(observableItems);
             // Format the items into the columns and add them to the TableView
-            itemTable.getColumns().addAll(Arrays.asList(idColumn, nameColumn, unitPriceColumn, unitQuantityColumn, totalValueColumn, deleteItemColumn));
+            itemTable.getColumns().setAll(Arrays.asList(idColumn, nameColumn, unitPriceColumn, unitQuantityColumn, totalValueColumn, deleteItemColumn));
             // Evenly spread and space columns to fit the screen size
             itemTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         }

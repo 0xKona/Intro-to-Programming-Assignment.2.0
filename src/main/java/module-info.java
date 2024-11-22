@@ -3,6 +3,7 @@ module com.inventorymanagement {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.desktop;
 
     opens main to javafx.fxml;  // Allow JavaFX to reflectively access classes in main package
     opens controller to javafx.fxml;
