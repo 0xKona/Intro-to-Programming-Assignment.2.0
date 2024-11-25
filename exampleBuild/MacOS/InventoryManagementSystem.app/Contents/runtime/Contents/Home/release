@@ -1,2 +1,2 @@
 JAVA_VERSION="21.0.4"
-MODULES="java.base java.logging java.transaction.xa java.xml java.sql java.datatransfer java.prefs java.desktop javafx.base jdk.unsupported javafx.graphics javafx.controls java.scripting javafx.fxml com.inventorymanagement java.compiler java.instrument java.management java.security.sasl java.naming com.inventorymanagement.merged.module"
+MODULES="java.base java.datatransfer java.xml java.prefs java.desktop java.logging java.transaction.xa java.sql javafx.base jdk.unsupported javafx.graphics javafx.controls java.scripting javafx.fxml com.inventorymanagement java.compiler java.instrument java.management java.security.sasl java.naming com.inventorymanagement.merged.module"
