@@ -87,8 +87,8 @@ public class View {
      */
     public static int displayItems(ArrayList<Item> items, String headerTitle) {
         // Define format strings with fixed widths ensuring the table is aligned.
-        String headerFormat = "%-10s %-15s %12s %10s %12s";
-        String itemFormat = "%-10d %-15s %12f %10f %12f";
+        String headerFormat = "%-10s %-15s %-12s %-15s %-15s";
+        String itemFormat = "%-10d %-15s %-12f %-15f %-15f";
 
         System.out.println("\n------- " + headerTitle + " ------"); // Print the header
         System.out.printf((headerFormat) + "%n", "ID", "Name", "Unit Price", "Quantity", "Total Price");
@@ -106,8 +106,7 @@ public class View {
         System.out.println("0 : Exit and Return to main menu");
         System.out.print("\nTo select an item, type an ID and press ENTER: ");
 
-        Scanner itemScanner = new Scanner(System.in); // Get user input
-        int itemID = itemScanner.nextInt();
+        int itemID = getInput("Enter item ID: ", Integer::parseInt);
         if (itemID == 0) {
             return -1; // return -1 if user wishes to return to main menu
         } else {
