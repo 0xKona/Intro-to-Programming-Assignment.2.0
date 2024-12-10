@@ -16,10 +16,16 @@ public class View {
 
     public static Stage currentStage;
 
+    // Loads CSS Styling
     private static void loadCss(Scene scene) {
         scene.getStylesheets().add(Objects.requireNonNull(View.class.getResource("/styles/global.css")).toExternalForm());
     }
 
+    /**
+     * Main method to load and initialize initial screen
+     * @param stage JavaFX Stage
+     * @throws IOException Thrown if fails to find or load FXML file
+     */
     public static void initializeView(Stage stage) throws IOException {
         currentStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(View.class.getResource("/views/main-menu.fxml"));

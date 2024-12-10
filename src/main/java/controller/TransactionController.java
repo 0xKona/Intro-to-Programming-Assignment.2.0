@@ -29,51 +29,81 @@ import java.util.Arrays;
  */
 public class TransactionController {
 
+    // Holds current filter string set by user
     private String filterQuery;
 
+    /**
+     * FXML Field for collecting filter string
+     */
     @FXML
     public TextField filterTransactionsInput = new TextField();
 
+    /**
+     * FXML Method for updating user input filter string
+     */
     @FXML
     public void setFilterTransactionsInput() {
-        filterQuery = filterTransactionsInput.getText().toLowerCase();
-        initialize();
+        filterQuery = filterTransactionsInput.getText().toLowerCase(); // collect string from user input
+        initialize(); // re-initialize tableview with new filter
     }
 
+    /**
+     * FXML Button method to manually reinitialize tableview with filter
+     */
     @FXML
     public void filterTransactions() {
         initialize();
     }
 
+    /**
+     * fXML method to navigate back to main menu
+     * @throws IOException occurs when fxml file not found or fails to load
+     */
     @FXML
     public void navigateHome() throws IOException {
         View.navigateToMainMenu();
     }
 
+    /**
+     * FXML Element to display list of transactions
+     */
     @FXML
     public TableView<Transaction> transactionTable;
 
     private String startDate = TimestampGenerator.getCurrentDayStart();;
     private String endDate = TimestampGenerator.getCurrentDayEnd();;
 
+    /**
+     * Sets initial table view with today's date
+     */
     public void initialize() {
         // Set initial date to today
         startDatePicker.setValue(LocalDate.now());
         initializeTableView(startDate, endDate);
     }
 
+    /**
+     * FXML Date picker element to change view date
+     */
     @FXML
     public DatePicker startDatePicker = new DatePicker();
 
+    /**
+     * FXML Method to execute when user selects a new start and end date using the date picker element
+     */
     @FXML
     public void setStartDate() {
+        // Update start date at midnight on selected date
         startDate = startDatePicker.getValue().toString().concat(" 00:00:00");
+        // Update end date to end of selected date
         endDate = startDatePicker.getValue().toString().concat(" 23:59:59");
         // Reload Table View with new date settings
         initializeTableView(startDate, endDate);
     }
 
-    // Initializes the transactionTableView component.
+    /**
+     * Initializes the transactionTableView component.
+     */
     private void initializeTableView(String startDate, String endDate) {
         System.out.println("Initialize TableView with startdate: " + startDate + " and enddate: " + endDate);
         transactionTable.setEditable(Boolean.FALSE); // This table is not editable so this is set to false.

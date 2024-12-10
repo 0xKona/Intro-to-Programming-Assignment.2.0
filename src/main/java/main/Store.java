@@ -25,7 +25,9 @@ public class Store extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        // Initialize the database
         DatabaseManager.initializeDatabase();
+        // Start JavaFX Scene with initial scene
         View.initializeView(stage);
     }
 }

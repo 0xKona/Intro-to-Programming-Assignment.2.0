@@ -25,6 +25,10 @@ import java.util.InputMismatchException;
  */
 public class ItemController {
 
+    /**
+     * FXML Method to switch scene back to main menu
+     * @throws IOException error
+     */
     @FXML
     public void navigateHome() throws IOException {
         View.navigateToMainMenu();
@@ -33,118 +37,178 @@ public class ItemController {
     /* BELOW CODE IS FOR ADDING A NEW ITEM */
     private static Item newItem;
 
+    /**
+     * Sets newItem to a new object instance of the Item class
+     */
     public static void initializeNewItem() {
         newItem = new Item();
     }
 
-    // Update newItem name
+    /**
+     * FXML Text input for item name
+     */
     @FXML
     private TextField itemNameField;
+
+    /**
+     * FXML Label for item name text validation error
+     */
     @FXML Label itemNameError;
+
+    /**
+     * FXML method for updating the newItem name
+     */
     @FXML
-    public void updateNewItemName() throws IOException {
-        String newItemName = itemNameField.getText();
+    public void updateNewItemName() {
+        String newItemName = itemNameField.getText(); // Get text from itemNameField
         if (newItemName.isEmpty()) {
-            itemNameError.setVisible(true);
+            itemNameError.setVisible(true); // if empty show validation error
             return;
         }
-        itemNameError.setVisible(false);
-        newItem.setName(newItemName);
+        itemNameError.setVisible(false); // if valid hide error
+        newItem.setName(newItemName); // set name value in newItem object to new value
     }
 
+    /**
+     * FXML Text input for item amount
+     */
     @FXML
     private TextField itemAmountField;
-    @FXML
-    public void updateNewItemAmount() throws IOException {
-        String newItemAmount = itemAmountField.getText();
 
-        if (isNumeric(newItemAmount)) {
-            newItem.setQtyInStock(Double.parseDouble(newItemAmount));
-            itemAmountError.setVisible(false);
+    /**
+     * FXML Method for updating item amount
+     */
+    @FXML
+    public void updateNewItemAmount() {
+        String newItemAmount = itemAmountField.getText(); // Get new amount from text field
+        if (isNumeric(newItemAmount)) { // if input is a numeric value it is valid
+            newItem.setQtyInStock(Double.parseDouble(newItemAmount)); // set new value when valid
+            itemAmountError.setVisible(false); // hide validation error when valid
         } else {
-            itemAmountError.setVisible(true);
+            itemAmountError.setVisible(true); // show validation error when not valid
         }
     }
 
+    /**
+     * FXML label for amount validation error
+     */
     @FXML
     private Label itemAmountError;
 
+    /**
+     * FXML Text field for item price
+     */
     @FXML
     private TextField itemPriceField;
 
+    /**
+     * FXML method for item price
+     * @throws InputMismatchException if input is not valid
+     */
     @FXML
     public void updateNewItemPrice() throws InputMismatchException {
-        String newItemPrice = itemPriceField.getText();
-
+        String newItemPrice = itemPriceField.getText(); // get user input from field
         if (isNumeric(newItemPrice)) { // Check if the input is a valid double number
-            newItem.setUnitPrice(Double.parseDouble(newItemPrice));
-            itemPriceError.setVisible(false);
+            newItem.setUnitPrice(Double.parseDouble(newItemPrice)); // set new value if valid
+            itemPriceError.setVisible(false); // hide error if valid
         } else {
-            itemPriceError.setVisible(true);
+            itemPriceError.setVisible(true); // show error if not valid
         }
     }
 
+    /**
+     * Item price error
+     */
     @FXML
     private Label itemPriceError;
 
-    // Utility method to check if a string is a valid double
+    /**
+     * Utility method to check if String is numeric and can be parsed into int or double without error
+     * @param str : Input string
+     * @return boolean
+     */
     private boolean isNumeric(String str) {
         try {
-            Double.parseDouble(str);
-            return true;
+            Double.parseDouble(str); // Try to parse into a double
+            return true; // if successful return true
         } catch (NumberFormatException e) {
+            // If error thrown when trying to parse catch it and return false, indicating it is not numeric
             return false;
         }
     }
 
+    /**
+     * FXML Method for submit button, submits new item if checks are passed
+     * @throws IOException if error occurs during submission
+     */
     @FXML
     public void submitNewItem() throws IOException {
-        // check object valid before submitting
-        System.out.println("***Submitting new item***");
-        System.out.println(newItem.getName());
-        System.out.println(newItem.getUnitPrice());
-        System.out.println(newItem.getQtyInStock());
+        // Check item is not empty before submission
         if (itemNameField.getText().isEmpty()) {
+            // show validation errors
             itemNameError.setVisible(true);
             submitError.setVisible(true);
+        // Item amount checks
         } else if (itemAmountField.getText().isEmpty() || itemAmountError.isVisible()) {
             itemAmountError.setVisible(true);
             submitError.setVisible(true);
+        // Item price checks
         } else if (itemPriceField.getText().isEmpty() || itemPriceError.isVisible()) {
             itemPriceError.setVisible(true);
             submitError.setVisible(true);
+        // Else no flags have been triggered and item can be submitted
         } else {
-            submitError.setVisible(false);
-            newItem.submitNewItem();
-            navigateHome();
+            submitError.setVisible(false); // hide existing errors
+            newItem.submitNewItem(); // submit item
+            navigateHome(); // navigate to main menu upon completion
         }
     }
+
+    /**
+     * FXML Label for submit button error
+     */
     @FXML
     private Label submitError;
 
-    private String filterQuery;
 
     /* BELOW CODE IS FOR EDITING ITEM QUANTITY */
+
+    private String filterQuery;
+
+    /**
+     * FXML Input for item filtering based on id or name
+     */
     @FXML
     public TextField filterItemsInput = new TextField();
 
+    /**
+     * FXML Method for setting filter
+     */
     @FXML
     public void setFilterItemsInput() {
         filterQuery = filterItemsInput.getText().toLowerCase();
         initialize();
     }
 
+    /**
+     * FXML Method to manually action filter (for use on filter button)
+     */
     @FXML
     public void filterItems() {
         initialize();
     }
 
-
+    /**
+     * FXML Table, lists Items in a table view where quantity can be edited and item deleted.
+     */
     @FXML
     public TableView<Item> itemTable;
 
+    /**
+     * initialize method, JavaFX detects this and runs it when the FXML scene is loaded, this sets up the table, along
+     * with the logic for certain cells.
+     */
     public void initialize() {
-
         /* Conditionally initialize itemTable, this is necessary due to the fact that my two fxml views are using this
         same controller, which means that when add-item-view.fxml is loaded it tries to initialize the TableView used in
         edit-items-view which causes a null exception, to fix this I simply need to do a not null check here first however

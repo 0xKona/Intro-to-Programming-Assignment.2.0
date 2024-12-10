@@ -11,27 +11,47 @@ import java.io.IOException;
  */
 public class StoreController {
 
+    /**
+     * FXML Method for switching scene to the add new item scene
+     * @throws IOException failure to load FXML file
+     */
     @FXML
     public void navigateToAddNewItem() throws IOException {
         View.navigateToAddNewItem();
     }
 
+    /**
+     * FXML Method for switching scene to items view
+     * @throws IOException failure to load FXML file
+     */
     @FXML
     public void navigateToViewItems() throws IOException {
         View.navigateToViewItems();
     }
 
+    /**
+     * FXML Method for swicthign scene to transaction report
+     * @throws IOException failure to load FXML file
+     */
     @FXML
     public void navigateToTransactionReport() throws IOException {
         View.navigateToTransactionReport();
     }
 
+    /**
+     * FXML Method for closing the program
+     */
     @FXML
     public void closeProgram() {
         exitProgram(0);
     }
 
-    // Wrapper method for System.exit that makes it easier to test without actually exiting the program.
+    /**
+     * Helper function to exit the program and test safely without terminating tests, we can mock this method to test
+     * the closeProgram method, without it when we would run the closeProgram method in the JUnit tests, the tests would
+     * exit since System.exit is called. when testing closeProgram, mock this method
+     * @param statusCode int
+     */
     public static void exitProgram (int statusCode) {
         System.exit(statusCode);
     }
