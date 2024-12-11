@@ -25,10 +25,8 @@ import storage.ItemStorage;
  * <li>{@link #submitUpdatedItem()}</li>
  * <li>{@link #submitDeleteItem()}</li>
  */
-public class Item {
-    private String id;
+public class Item extends ModelID {
     private String name;
-
     // Initialize these variables as doubles as the price can include a decimal.
     private double unitPrice;
     private double qtyInStock;
@@ -36,22 +34,6 @@ public class Item {
 
     private double previousQuantityInStock;
     private double previousTotalValue;
-
-    /**
-     * Returns the Item objects ID
-     * @return int ID
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Manually update the Item objects ID
-     * @param id String
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
 
     /**
      * Returns the Item objects name as a String

@@ -26,31 +26,13 @@ import java.sql.SQLException;
  * <li>{@link #setTimestamp(String)}</li>
  * <li>{@link #generate(Item, TransactionType)}</li>
  */
-public class Transaction {
-    private String id;
+public class Transaction extends ModelID {
     private String description;
     private double quantityChange;
     private double valueChange;
     private double quantityRemaining;
     private String transactionType;
     private String timestamp;
-
-    /**
-     * Gets the transaction objects ID and returns it.
-     * @return int;
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the Transactions ID, should only be used when reading data from storage and creating objects, Manually
-     * updating a TransactionID is NOT recommended.
-     * @param id String
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
 
     /**
      * Gets the transaction objects description and returns it
@@ -155,7 +137,7 @@ public class Transaction {
      */
     public void generate(Item item, TransactionType transactionType) {
         try {
-            this.id = IDGenerator.generateNewID(TableType.Transactions);
+            this.setId(IDGenerator.generateNewID(TableType.Transactions));
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

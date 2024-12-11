@@ -30,7 +30,7 @@ public class StoreController {
     }
 
     /**
-     * FXML Method for swicthign scene to transaction report
+     * FXML Method for switching scene to transaction report
      * @throws IOException failure to load FXML file
      */
     @FXML
